@@ -39,15 +39,14 @@ packer.init {
 }
 
 return packer.startup(function(use)
+	use 'wbthomason/packer.nvim'
 	use 'ronakg/quickr-cscope.vim'
 	use 'cossonleo/dirdiff.nvim'
 	use 'nvim-tree/nvim-tree.lua'
 	use 'scrooloose/nerdcommenter'
 	use 'jiangmiao/auto-pairs'
 	use 'tpope/vim-fugitive'
-	use 'itchyny/lightline.vim'
 	use 'projekt0n/github-nvim-theme'
-	--use 'ofirgall/ofirkai.nvim'
 	use 'karb94/neoscroll.nvim'
 	use 'tpope/vim-surround'
 	use 'preservim/tagbar'
@@ -59,6 +58,16 @@ return packer.startup(function(use)
 	use 'AndrewRadev/linediff.vim'
 	use 'kyazdani42/nvim-web-devicons'
 	use 'lukas-reineke/indent-blankline.nvim'
+	use 'nvim-treesitter/nvim-treesitter'
+	use 'neovim/nvim-lspconfig'
+	use 'williamboman/mason.nvim'
+	use 'neovim/nvim-lspconfig'
+	use 'hrsh7th/cmp-nvim-lsp'
+	use 'hrsh7th/cmp-buffer'
+	use 'hrsh7th/cmp-path'
+	use 'hrsh7th/cmp-cmdline'
+	use 'hrsh7th/nvim-cmp'
+
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
