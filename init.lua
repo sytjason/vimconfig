@@ -11,29 +11,6 @@ vim.cmd([[
 
 
 ]])
---
---  let g:lightline = { 
---        \ 'colorscheme' : 'molokai',
---        \ 'component' : {
---        \   'tagbar' : '%{tagbar#currenttag("%s", "", "f")}',
---        \ },
---        \ 'component_function' : {
---        \   'gitbranch' : 'FugitiveStatusline',
---        \ },
---        \ }
---
---  let g:lightline.active = {
---      \ 'left': [ [ 'mode', 'paste' ],
---      \           [ 'readonly', 'filename', 'gitbranch', 'modified' ] ],
---      \ 'right': [ [ 'lineinfo' ],
---      \            [ 'percent' ],
---      \            [ 'tagbar', 'fileformat', 'fileencoding', 'filetype' ] ] }
---
---  let g:lightline.tabline = {
---      \ 'left': [ [ 'tabs' ] ],
---      \ 'right': [ [ 'close' ] ],
---      \ }
-
 
 -- Common editor setup
 require('plugins')
