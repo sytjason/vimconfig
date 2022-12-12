@@ -15,7 +15,7 @@ diffview.setup({
 },
 view = {
   merge_tool = {
-    layout = "diff1_plain",
+    layout = "diff3_mixed",
   },
 },
 file_panel = {
