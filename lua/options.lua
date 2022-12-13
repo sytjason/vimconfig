@@ -3,6 +3,7 @@ local options = {
 	tabstop       = 8,
 	mouse         = "a",
 	smartindent   = true,
+	smartcase     = true,
 	incsearch     = true,
 	hlsearch      = true,
 	number        = true,

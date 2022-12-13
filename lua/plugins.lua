@@ -23,6 +23,7 @@ autocmd BufWritePost plugins.lua source <afile> | PackerSync
 augroup end
 ]]
 
+
 -- Use a protected call so we don't error out on first use
 local status_ok, packer = pcall(require, "packer")
 if not status_ok then
@@ -40,6 +41,8 @@ packer.init {
 
 return packer.startup(function(use)
 	use 'wbthomason/packer.nvim'
+	use "nvim-lua/popup.nvim" -- An implementation of the Popup API from vim in Neovim
+	use 'nvim-lua/plenary.nvim'
 	use 'ronakg/quickr-cscope.vim'
 	use 'cossonleo/dirdiff.nvim'
 	use 'nvim-tree/nvim-tree.lua'
@@ -51,7 +54,6 @@ return packer.startup(function(use)
 	use 'tpope/vim-surround'
 	use 'preservim/tagbar'
 	use 'bfrg/vim-cpp-modern'
-	use 'nvim-lua/plenary.nvim'
 	use {'nvim-telescope/telescope.nvim', tag = '0.1.0'}
 	use 'nvim-lualine/lualine.nvim'
 	use 'sindrets/diffview.nvim'
@@ -60,13 +62,25 @@ return packer.startup(function(use)
 	use 'lukas-reineke/indent-blankline.nvim'
 	use 'nvim-treesitter/nvim-treesitter'
 	use 'neovim/nvim-lspconfig'
+	use 'onsails/lspkind.nvim'
+
 	use 'williamboman/mason.nvim'
-	use 'neovim/nvim-lspconfig'
+	use 'mhinz/vim-startify'
+
+	--
+	-- auto completion
+	--
+	use 'hrsh7th/nvim-cmp'
 	use 'hrsh7th/cmp-nvim-lsp'
 	use 'hrsh7th/cmp-buffer'
 	use 'hrsh7th/cmp-path'
 	use 'hrsh7th/cmp-cmdline'
-	use 'hrsh7th/nvim-cmp'
+
+	-- snippets
+	use {'L3MON4D3/LuaSnip', tag = "v<CurrentMajor>.*"}
+	use 'hrsh7th/cmp-nvim-lua'
+	use 'saadparwaiz1/cmp_luasnip'
+	use 'rafamadriz/friendly-snippets'
 
 
 	-- Automatically set up your configuration after cloning packer.nvim
@@ -74,5 +88,4 @@ return packer.startup(function(use)
 	if PACKER_BOOTSTRAP then
 		require("packer").sync()
 	end
-
 end)
