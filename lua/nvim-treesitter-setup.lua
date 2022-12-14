@@ -5,7 +5,7 @@ end
 
 treesitter.setup {
 	-- A list of parser names, or "all"
-	ensure_installed = { "bash", "c", "cpp", "lua", "make", "python", "vim" },
+	ensure_installed = { "bash", "c", "cpp", "lua", "make", "python" },
 
 	-- Install parsers synchronously (only applied to `ensure_installed`)
 	sync_install = false,
@@ -28,7 +28,7 @@ treesitter.setup {
 		-- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
 		-- the name of the parser)
 		-- list of language that will be disabled
-		disable = { },
+		disable = { "vim" }, -- vim treesitter compile would fail
 		-- Or use a function for more flexibility, e.g. to disable slow treesitter highlight for large files
 		--disable = function(lang, buf)
 			--local max_filesize = 100 * 1024 -- 100 KB
