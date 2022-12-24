@@ -62,10 +62,12 @@ return packer.startup(function(use)
 	use 'lukas-reineke/indent-blankline.nvim'
 	use 'nvim-treesitter/nvim-treesitter'
 	use 'neovim/nvim-lspconfig'
+	use 'williamboman/mason.nvim'
+	use 'williamboman/mason-lspconfig.nvim'
 	use 'onsails/lspkind.nvim'
 
-	use 'williamboman/mason.nvim'
-	use 'mhinz/vim-startify'
+	--use 'mhinz/vim-startify'
+	use 'goolord/alpha-nvim'
 
 	--
 	-- auto completion

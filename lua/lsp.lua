@@ -55,7 +55,7 @@ local _on_attach = function(_, bufnr)
 	vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
 	vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
 	vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-	vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+	--vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
 
 	vim.api.nvim_buf_set_keymap(
 	bufnr,
@@ -87,6 +87,7 @@ require('lspconfig')['sumneko_lua'].setup{
 			workspace = {
 				-- Make the server aware of Neovim runtime files
 				library = vim.api.nvim_get_runtime_file("", true),
+				checkThirdParty = false,
 			},
 			-- Do not send telemetry data containing a randomized but unique identifier
 			telemetry = {
