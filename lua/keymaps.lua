@@ -8,6 +8,12 @@ map('n', '<C-k>', '<C-W>k')
 map('n', '<C-h>', '<C-W>h')
 map('n', '<C-l>', '<C-W>l')
 
+-- Move text up and down
+map('v', "J", ":move '>+1<CR>gv-gv")
+map('v', "K", ":move '<-2<CR>gv-gv")
+map('v', "<A-j>", ":move '>+1<CR>gv-gv")
+map('v', "<A-k>", ":move '<-2<CR>gv-gv")
+
 -- Diffview
 map('n', '<leader>dv', ':DiffviewOpen<CR>')
 map('n', '<leader>dh', ':DiffviewFileHistory<CR>')
