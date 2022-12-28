@@ -32,3 +32,5 @@ end
 for k, v in pairs(g_options) do
 	vim.g[k] = v
 end
+
+vim.cmd [[colorscheme nightfox]]

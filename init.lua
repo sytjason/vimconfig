@@ -5,7 +5,6 @@ require('keymaps')
 
 -- Plugins setup
 require('diffview-setup')
-require('github-theme-setup')
 require('lualine-setup')
 require('neoscroll-setup')
 require('nvim-tree-setup')

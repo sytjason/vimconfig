@@ -43,31 +43,51 @@ return packer.startup(function(use)
 	use 'wbthomason/packer.nvim'
 	use "nvim-lua/popup.nvim" -- An implementation of the Popup API from vim in Neovim
 	use 'nvim-lua/plenary.nvim'
-	use 'ronakg/quickr-cscope.vim'
 	use 'cossonleo/dirdiff.nvim'
 	use 'nvim-tree/nvim-tree.lua'
 	use 'scrooloose/nerdcommenter'
 	use 'jiangmiao/auto-pairs'
 	use 'tpope/vim-fugitive'
-	use 'projekt0n/github-nvim-theme'
 	use 'karb94/neoscroll.nvim'
 	use 'tpope/vim-surround'
 	use 'preservim/tagbar'
 	use 'bfrg/vim-cpp-modern'
-	use {'nvim-telescope/telescope.nvim', tag = '0.1.0'}
-	use 'nvim-lualine/lualine.nvim'
+	use 'nvim-telescope/telescope.nvim'
 	use 'sindrets/diffview.nvim'
 	use 'AndrewRadev/linediff.vim'
 	use 'kyazdani42/nvim-web-devicons'
 	use 'lukas-reineke/indent-blankline.nvim'
+
+	--
+	-- greeter
+	--
+	use 'goolord/alpha-nvim'
+
+	--
+	-- tab/status line
+	--
+	use 'nvim-lualine/lualine.nvim'
+
+	--
+	--colorscheme
+	--
+	use 'projekt0n/github-nvim-theme'
+	use 'EdenEast/nightfox.nvim'
+
+	--
+	-- treesitter
+	--
 	use 'nvim-treesitter/nvim-treesitter'
+	use 'nvim-treesitter/nvim-treesitter-refactor'
+	use 'nvim-treesitter/nvim-treesitter-context'
+
+	--
+	-- lsp
+	--
 	use 'neovim/nvim-lspconfig'
 	use 'williamboman/mason.nvim'
 	use 'williamboman/mason-lspconfig.nvim'
 	use 'onsails/lspkind.nvim'
-
-	--use 'mhinz/vim-startify'
-	use 'goolord/alpha-nvim'
 
 	--
 	-- auto completion
@@ -79,7 +99,7 @@ return packer.startup(function(use)
 	use 'hrsh7th/cmp-cmdline'
 
 	-- snippets
-	use {'L3MON4D3/LuaSnip', tag = "v<CurrentMajor>.*"}
+	use 'L3MON4D3/LuaSnip'
 	use 'hrsh7th/cmp-nvim-lua'
 	use 'saadparwaiz1/cmp_luasnip'
 	use 'rafamadriz/friendly-snippets'

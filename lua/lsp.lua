@@ -66,9 +66,25 @@ local _on_attach = function(_, bufnr)
 	)
 end
 
+require('lspconfig').bashls.setup{
+	on_attach = _on_attach,
+	capabilities = vim.lsp.protocol.make_client_capabilities(),
+	filetypes = {"sh", "make"},
+}
+
+local _cmd
+if vim.fn.hostname() == "SHNBS"
+then
+	_cmd = {"/home/linuxbrew/.linuxbrew/bin/clangd"}
+else
+	_cmd = {"clangd"}
+end
+
 require('lspconfig')['clangd'].setup {
 	on_attach = _on_attach,
 	capabilities = vim.lsp.protocol.make_client_capabilities(),
+	cmd = _cmd,
+	filetypes = {"c", "cpp", "proto"},
 }
 
 require('lspconfig')['sumneko_lua'].setup{
