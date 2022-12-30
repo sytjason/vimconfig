@@ -42,9 +42,10 @@ packer.init {
 return packer.startup(function(use)
 	use 'wbthomason/packer.nvim'
 	use "nvim-lua/popup.nvim" -- An implementation of the Popup API from vim in Neovim
+	use 'MunifTanjim/nui.nvim' -- Required by neotree
 	use 'nvim-lua/plenary.nvim'
 	use 'cossonleo/dirdiff.nvim'
-	use 'nvim-tree/nvim-tree.lua'
+	use 'nvim-neo-tree/neo-tree.nvim'
 	use 'scrooloose/nerdcommenter'
 	use 'jiangmiao/auto-pairs'
 	use 'tpope/vim-fugitive'
@@ -98,7 +99,9 @@ return packer.startup(function(use)
 	use 'hrsh7th/cmp-path'
 	use 'hrsh7th/cmp-cmdline'
 
+	--
 	-- snippets
+	--
 	use 'L3MON4D3/LuaSnip'
 	use 'hrsh7th/cmp-nvim-lua'
 	use 'saadparwaiz1/cmp_luasnip'

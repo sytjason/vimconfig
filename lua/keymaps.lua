@@ -18,8 +18,8 @@ map('v', "<A-k>", ":move '<-2<CR>gv-gv")
 map('n', '<leader>dv', ':DiffviewOpen<CR>')
 map('n', '<leader>dh', ':DiffviewFileHistory<CR>')
 
--- Nvim-tree
-map('n', '<F2>', ':NvimTreeToggle<CR>')
+-- Neo-tree
+map('n', '<F2>', ':Neotree toggle<CR>')
 
 -- Telescope
 local builtin = require('telescope.builtin')
