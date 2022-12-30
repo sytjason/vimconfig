@@ -23,12 +23,12 @@ map('n', '<F2>', ':Neotree toggle<CR>')
 
 -- Telescope
 local builtin = require('telescope.builtin')
-map('n', '<leader>f', builtin.find_files)
+map('n', '<leader>ff', builtin.find_files)
 map('n', '<leader>gr', builtin.live_grep)
 map('n', '<leader>gs', builtin.grep_string)
 map('n', '<leader>fh', builtin.help_tags)
 map('n', '<leader>km', builtin.keymaps)
-map('n', '<leader>r', builtin.lsp_references)
+map('n', '<leader>rr', builtin.lsp_references)
 map('n', '<leader>gd', builtin.lsp_definitions)
 map('n', '<leader>gi', builtin.lsp_implementations)
 

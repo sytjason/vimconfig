@@ -76,13 +76,16 @@ telescope.setup {
 			},
 		},
 	},
-	 pickers = {
-		 live_grep = {
-			 theme = "ivy",
-		 },
-		 grep_string = {
-			 theme = "ivy",
-		 }
-	 },
+	pickers = {
+		find_files = {
+			theme = "ivy",
+		},
+		live_grep = {
+			theme = "ivy",
+		},
+		grep_string = {
+			theme = "ivy",
+		}
+	},
 }
 
