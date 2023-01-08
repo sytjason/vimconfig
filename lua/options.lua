@@ -13,8 +13,8 @@ local options = {
 	splitbelow    = true,            -- force all horizontal splits to go below current window
 	splitright    = true,            -- force all vertical splits to go to the right of current window
 	wrap          = true,            -- display lines as one long line
+	--laststatus    = 3,
 }
-
 
 local g_options = {
 	quickr_cscope_use_qf_g   = 1,
@@ -33,4 +33,5 @@ for k, v in pairs(g_options) do
 	vim.g[k] = v
 end
 
+vim.cmd('set laststatus=3')
 vim.cmd [[colorscheme nightfox]]

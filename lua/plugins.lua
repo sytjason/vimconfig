@@ -107,6 +107,14 @@ return packer.startup(function(use)
 	use 'saadparwaiz1/cmp_luasnip'
 	use 'rafamadriz/friendly-snippets'
 
+	--
+	-- notes
+	--
+	use {
+		"nvim-neorg/neorg",
+		tags = "v2.0.0",
+		priority = 30,
+	}
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
