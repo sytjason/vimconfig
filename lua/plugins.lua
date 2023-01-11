@@ -52,7 +52,6 @@ return packer.startup(function(use)
 	use 'karb94/neoscroll.nvim'
 	use 'tpope/vim-surround'
 	use 'preservim/tagbar'
-	use 'bfrg/vim-cpp-modern'
 	use 'nvim-telescope/telescope.nvim'
 	use 'sindrets/diffview.nvim'
 	use 'AndrewRadev/linediff.vim'

@@ -53,6 +53,7 @@ treesitter.setup {
 			},
 		},
 	},
-
 }
+
+vim.cmd('hi TreesitterContext gui=underline guisp=Grey')
 
