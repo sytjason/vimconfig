@@ -4,7 +4,7 @@ if not status_ok then
 end
 treesitter.setup {
 	-- A list of parser names, or "all"
-	ensure_installed = { "bash", "c", "cpp",  "diff", "lua", "make", "python", "norg", "norg_meta" },
+	ensure_installed = { "bash", "c", "cpp",  "diff", "lua", "make", "python", "norg" },
 
 	-- Automatically install missing parsers when entering buffer
 	-- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally

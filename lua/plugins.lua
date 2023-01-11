@@ -58,6 +58,7 @@ return packer.startup(function(use)
 	use 'AndrewRadev/linediff.vim'
 	use 'kyazdani42/nvim-web-devicons'
 	use 'lukas-reineke/indent-blankline.nvim'
+	use {"akinsho/toggleterm.nvim", tag = '*'}
 
 	--
 	-- greeter

@@ -34,3 +34,7 @@ map('n', '<leader>gi', builtin.lsp_implementations)
 
 -- Tagbar
 map('n', '<F3>', ':TagbarToggle<CR>')
+
+-- ToggleTerm
+map('n', '<F4>', ':ToggleTerm<CR>')
+map('t', '<F4>', [[<C-\><C-n> <Cmd>ToggleTerm<CR>]])
