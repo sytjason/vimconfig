@@ -11,6 +11,6 @@ local servers = {
 mason.setup{}
 require("mason-lspconfig").setup({
 	ensure_installed = servers,
-	automatic_installation = true,
+	automatic_installation = false,
 })
 
