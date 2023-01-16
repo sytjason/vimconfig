@@ -1,6 +1,6 @@
 local status_ok, ofirkai = pcall(require, "ofirkai")
 if not status_ok then
-	return
+  return
 end
 
 ofirkai.setup{}
