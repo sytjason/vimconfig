@@ -80,14 +80,17 @@ else
   _cmd = {"clangd"}
 end
 
-require('lspconfig')['clangd'].setup {
+local status_ok, _lspconfig = pcall(require, "lspconfig")
+if not status_ok then return end
+
+_lspconfig['clangd'].setup {
   on_attach = _on_attach,
   capabilities = vim.lsp.protocol.make_client_capabilities(),
   cmd = _cmd,
   filetypes = {"c", "cpp", "proto"},
 }
 
-require('lspconfig')['sumneko_lua'].setup{
+_lspconfig['sumneko_lua'].setup{
   on_attach = _on_attach,
   capabilities = vim.lsp.protocol.make_client_capabilities(),
   settings = {
@@ -111,4 +114,9 @@ require('lspconfig')['sumneko_lua'].setup{
       },
     },
   },
+}
+
+_lspconfig.astro.setup{
+  on_attach = _on_attach,
+  capabilities = vim.lsp.protocol.make_client_capabilities(),
 }
