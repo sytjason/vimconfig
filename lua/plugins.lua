@@ -45,7 +45,7 @@ return packer.startup(function(use)
   use 'MunifTanjim/nui.nvim' -- Required by neotree
   use 'nvim-lua/plenary.nvim'
   use 'cossonleo/dirdiff.nvim'
-  use 'nvim-neo-tree/neo-tree.nvim'
+  use {'nvim-neo-tree/neo-tree.nvim', branch = "v2.x"}
   use 'scrooloose/nerdcommenter'
   use 'tpope/vim-fugitive'
   use 'karb94/neoscroll.nvim'
@@ -58,6 +58,7 @@ return packer.startup(function(use)
   use 'lukas-reineke/indent-blankline.nvim'
   use {"akinsho/toggleterm.nvim", tag = '*'}
   use 'gpanders/editorconfig.nvim'
+  use 'jbyuki/venn.nvim'
 
   --
   -- greeter
