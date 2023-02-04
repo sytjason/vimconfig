@@ -14,12 +14,15 @@ diffview.setup{
   keymaps = {
     view = {
       { "n", "gf", actions.goto_file_tab, { desc = "Open the file in a new tab" } },
+      { "n", "<leader>dq", "<Cmd>DiffviewClose<CR>", { silent = true } },
     },
     file_panel = {
       { "n", "gf", actions.goto_file_tab, { desc = "Open the file in a new tab" } },
+      { "n", "<leader>dq", "<Cmd>DiffviewClose<CR>", { silent = true } },
     },
     file_history_panel = {
       { "n", "gf", actions.goto_file_tab, { desc = "Open the file in a new tab" } },
+      { "n", "<leader>dq", "<Cmd>DiffviewClose<CR>", { silent = true } },
     },
   },
 }
