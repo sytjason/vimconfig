@@ -19,10 +19,10 @@ treesitter.setup {
   incremental_selection = {
     enable = true,
     keymaps = {
-      init_selection = "<leader>vi", -- set to `false` to disable one of the mappings
-      node_incremental = "<leader>vv",
-      scope_incremental = "<leader>VV",
-      node_decremental = "<leader>vk",
+      init_selection = "<leader>si", -- set to `false` to disable one of the mappings
+      node_incremental = "<leader>ss",
+      scope_incremental = "<leader>SS",
+      node_decremental = "<leader>sk",
     },
   },
 

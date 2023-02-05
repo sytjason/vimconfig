@@ -5,8 +5,10 @@ local options = {
   smartindent   = true,
   smartcase     = true,
   incsearch     = true,
+  ignorecase    = true,
   hlsearch      = true,
   number        = true,
+  swapfile      = false,
   autoread      = true,            -- auto load the buffer if the file has been changed outside of vim
   showmode      = false,           -- do not show mode on the message line, since it is shown in status line
   termguicolors = true,            -- enable true colors support
@@ -14,6 +16,8 @@ local options = {
   splitright    = true,            -- force all vertical splits to go to the right of current window
   wrap          = true,            -- display lines as one long line
   --laststatus    = 3,
+  timeoutlen    = 1000,
+  scrolloff     = 8,
 }
 
 local g_options = {
