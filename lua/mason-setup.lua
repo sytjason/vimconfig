@@ -6,6 +6,7 @@ end
 local servers = {
   "sumneko_lua",
   "clangd",
+  "rust_analyzer"
 }
 
 mason.setup{}

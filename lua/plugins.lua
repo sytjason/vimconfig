@@ -46,7 +46,7 @@ return packer.startup(function(use)
   use 'nvim-lua/plenary.nvim'
   use 'cossonleo/dirdiff.nvim'
   use {'nvim-neo-tree/neo-tree.nvim', branch = "v2.x"}
-  use 'scrooloose/nerdcommenter'
+  use 'numToStr/Comment.nvim'
   use 'tpope/vim-fugitive'
   use 'karb94/neoscroll.nvim'
   use 'tpope/vim-surround'
@@ -59,6 +59,11 @@ return packer.startup(function(use)
   use {"akinsho/toggleterm.nvim", tag = '*'}
   use 'gpanders/editorconfig.nvim'
   use 'jbyuki/venn.nvim'
+
+  --
+  -- rust
+  --
+  use 'simrat39/rust-tools.nvim'
 
   --
   -- greeter
