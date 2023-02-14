@@ -20,3 +20,5 @@ require('neorg-setup')
 require('toggleterm-setup')
 require('venn-setup')
 require('nightfox-setup')
+-- require('rust-tools-setup') -- it might break my lspconfig setup
+require("comment-setup")

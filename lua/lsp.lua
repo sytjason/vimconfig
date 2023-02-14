@@ -47,7 +47,6 @@ local _on_attach = function(_, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, "n", "[d", '<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, "n", "]d", '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>', opts)
 
-
   -- Mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
   local bufopts = { noremap = true, silent = true, buffer = bufnr }
@@ -72,6 +71,10 @@ require('lspconfig').bashls.setup{
   filetypes = {"sh", "make"},
 }
 
+
+local status_ok, _lspconfig = pcall(require, "lspconfig")
+if not status_ok then return end
+
 local _cmd
 if vim.fn.hostname() == "SHNBS"
 then
@@ -80,9 +83,6 @@ else
   _cmd = {"clangd"}
 end
 
-local status_ok, _lspconfig = pcall(require, "lspconfig")
-if not status_ok then return end
-
 _lspconfig['clangd'].setup {
   on_attach = _on_attach,
   capabilities = vim.lsp.protocol.make_client_capabilities(),
@@ -90,7 +90,7 @@ _lspconfig['clangd'].setup {
   filetypes = {"c", "cpp", "proto"},
 }
 
-_lspconfig['sumneko_lua'].setup{
+_lspconfig['lua_ls'].setup{
   on_attach = _on_attach,
   capabilities = vim.lsp.protocol.make_client_capabilities(),
   settings = {
@@ -106,7 +106,6 @@ _lspconfig['sumneko_lua'].setup{
       workspace = {
         -- Make the server aware of Neovim runtime files
         library = vim.api.nvim_get_runtime_file("", true),
-        checkThirdParty = false,
       },
       -- Do not send telemetry data containing a randomized but unique identifier
       telemetry = {
@@ -119,4 +118,9 @@ _lspconfig['sumneko_lua'].setup{
 _lspconfig.astro.setup{
   on_attach = _on_attach,
   capabilities = vim.lsp.protocol.make_client_capabilities(),
+}
+
+_lspconfig.rust_analyzer.setup{
+  on_attach = _on_attach,
+  capabilities = vim.lsp.protocol.make_client_capabilities()
 }
