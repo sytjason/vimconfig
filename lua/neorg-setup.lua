@@ -5,6 +5,8 @@ _neorg.setup{
   load = {
     ["core.defaults"] = {},
 
+    ["core.export"] = {},
+
     ["core.keybinds"] = {
       -- just show some keybinds I might use [Ref]{neorg/modules/core/keybinds/keybinds.lua}
       --keybinds.map_event_to_mode("norg", {
