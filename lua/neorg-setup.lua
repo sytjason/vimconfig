@@ -26,7 +26,7 @@ _neorg.setup{
       --},
     },
 
-    ["core.norg.dirman"] = {
+    ["core.dirman"] = {
       config = {
         workspaces = {
           work = "~/Documents/study/note/work",
@@ -36,13 +36,13 @@ _neorg.setup{
       },
     },
 
-    ["core.norg.completion"] = {
+    ["core.completion"] = {
       config = {
         engine = "nvim-cmp",
       },
     },
 
-    ["core.norg.concealer"] = {
+    ["core.concealer"] = {
       config = {
         folds = false;
       },
