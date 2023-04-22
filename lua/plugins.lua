@@ -122,6 +122,8 @@ return packer.startup(function(use)
     priority = 30,
   }
 
+  use 'jackMort/ChatGPT.nvim'
+
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
   if PACKER_BOOTSTRAP then
