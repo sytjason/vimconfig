@@ -4,6 +4,7 @@ function _G.Toggle_venn()
   if venn_enabled == "nil" then
     vim.b.venn_enabled = true
     vim.cmd[[setlocal ve=all]]
+    -- set double line mode
     -- draw a line on HJKL keystokes
     vim.api.nvim_buf_set_keymap(0, "n", "J", "<C-v>j:VBox<CR>", {noremap = true})
     vim.api.nvim_buf_set_keymap(0, "n", "K", "<C-v>k:VBox<CR>", {noremap = true})
