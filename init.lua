@@ -5,6 +5,7 @@ require('keymaps')
 
 -- Plugins setup
 require('diffview-setup')
+require('devicon-setup')
 require('lualine-setup')
 require('luasnip-setup')
 require('neoscroll-setup')
