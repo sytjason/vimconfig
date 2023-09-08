@@ -45,7 +45,8 @@ return packer.startup(function(use)
   use 'MunifTanjim/nui.nvim' -- Required by neotree
   use 'nvim-lua/plenary.nvim'
   use 'cossonleo/dirdiff.nvim'
-  use {'nvim-neo-tree/neo-tree.nvim', branch = "v2.x"}
+  use {'nvim-neo-tree/neo-tree.nvim', branch = "v3.x"}
+  use 'stevearc/oil.nvim'
   use 'numToStr/Comment.nvim'
   use 'tpope/vim-fugitive'
   use 'karb94/neoscroll.nvim'
