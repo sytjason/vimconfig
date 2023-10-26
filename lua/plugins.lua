@@ -40,12 +40,14 @@ packer.init {
 }
 
 return packer.startup(function(use)
+  use {'3rd/image.nvim'}
   use 'wbthomason/packer.nvim'
   use "nvim-lua/popup.nvim" -- An implementation of the Popup API from vim in Neovim
   use 'MunifTanjim/nui.nvim' -- Required by neotree
   use 'nvim-lua/plenary.nvim'
   use 'cossonleo/dirdiff.nvim'
-  use {'nvim-neo-tree/neo-tree.nvim', branch = "v2.x"}
+  use {'nvim-neo-tree/neo-tree.nvim', branch = "v3.x"}
+  use 'stevearc/oil.nvim'
   use 'numToStr/Comment.nvim'
   use 'tpope/vim-fugitive'
   use 'karb94/neoscroll.nvim'

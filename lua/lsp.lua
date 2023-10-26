@@ -65,12 +65,6 @@ local _on_attach = function(_, bufnr)
   )
 end
 
-require('lspconfig').bashls.setup{
-  on_attach = _on_attach,
-  capabilities = vim.lsp.protocol.make_client_capabilities(),
-  filetypes = {"sh", "make"},
-}
-
 
 local status_ok, _lspconfig = pcall(require, "lspconfig")
 if not status_ok then return end
@@ -120,7 +114,19 @@ _lspconfig.astro.setup{
   capabilities = vim.lsp.protocol.make_client_capabilities(),
 }
 
+_lspconfig.bashls.setup{
+  on_attach = _on_attach,
+  capabilities = vim.lsp.protocol.make_client_capabilities(),
+  filetypes = {"sh"},
+}
+
 _lspconfig.rust_analyzer.setup{
   on_attach = _on_attach,
   capabilities = vim.lsp.protocol.make_client_capabilities()
 }
+
+_lspconfig.pylsp.setup{
+  on_attach = _on_attach,
+  capabilities = vim.lsp.protocol.make_client_capabilities()
+}
+
