@@ -7,7 +7,8 @@ local servers = {
   "lua_ls",
   "clangd",
   "rust_analyzer",
-  "bashls"
+  "bashls",
+  "pylsp",
 }
 
 mason.setup{}

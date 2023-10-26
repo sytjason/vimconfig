@@ -120,8 +120,13 @@ _lspconfig.bashls.setup{
   filetypes = {"sh"},
 }
 
-
 _lspconfig.rust_analyzer.setup{
   on_attach = _on_attach,
   capabilities = vim.lsp.protocol.make_client_capabilities()
 }
+
+_lspconfig.pylsp.setup{
+  on_attach = _on_attach,
+  capabilities = vim.lsp.protocol.make_client_capabilities()
+}
+
