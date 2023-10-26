@@ -40,6 +40,7 @@ packer.init {
 }
 
 return packer.startup(function(use)
+  use {'3rd/image.nvim'}
   use 'wbthomason/packer.nvim'
   use "nvim-lua/popup.nvim" -- An implementation of the Popup API from vim in Neovim
   use 'MunifTanjim/nui.nvim' -- Required by neotree
