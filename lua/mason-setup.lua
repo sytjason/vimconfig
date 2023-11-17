@@ -4,7 +4,7 @@ if not status_ok then
 end
 
 local servers = {
-  "lua_ls",
+  "bashls",
   "clangd",
   "rust_analyzer",
   "bashls",

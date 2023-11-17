@@ -42,3 +42,6 @@ map('t', '<F4>', [[<C-\><C-n> <Cmd>ToggleTerm<CR>]])
 -- Open work note
 map('n', '<F5>', ":Neorg workspace work<CR>:cd %:h<CR>")
 
+-- Commenter
+map('n', '<C-_>', 'gcc')
+map('v', '<C-_>', 'gc')
