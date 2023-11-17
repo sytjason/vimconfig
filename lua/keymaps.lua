@@ -38,3 +38,7 @@ map('n', '<F3>', ':TagbarToggle<CR>')
 -- ToggleTerm
 map('n', '<F4>', ':ToggleTerm<CR>')
 map('t', '<F4>', [[<C-\><C-n> <Cmd>ToggleTerm<CR>]])
+
+-- Open work note
+map('n', '<F5>', ":Neorg workspace work<CR>:cd %:h<CR>")
+
