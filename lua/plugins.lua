@@ -40,7 +40,6 @@ packer.init {
 }
 
 return packer.startup(function(use)
-  use {'3rd/image.nvim'}
   use 'wbthomason/packer.nvim'
   use "nvim-lua/popup.nvim" -- An implementation of the Popup API from vim in Neovim
   use 'MunifTanjim/nui.nvim' -- Required by neotree
@@ -48,10 +47,6 @@ return packer.startup(function(use)
   use 'cossonleo/dirdiff.nvim'
   use {'nvim-neo-tree/neo-tree.nvim', branch = "v3.x"}
   use 'stevearc/oil.nvim'
-  use 'numToStr/Comment.nvim'
-  use 'tpope/vim-fugitive'
-  use 'karb94/neoscroll.nvim'
-  use 'tpope/vim-surround'
   use 'preservim/tagbar'
   use 'nvim-telescope/telescope.nvim'
   use 'sindrets/diffview.nvim'
@@ -61,27 +56,23 @@ return packer.startup(function(use)
   use {"akinsho/toggleterm.nvim", tag = '*'}
   use 'gpanders/editorconfig.nvim'
   use 'jbyuki/venn.nvim'
+  use 'filipdutescu/renamer.nvim'
 
   --
-  -- rust
+  -- editing
   --
-  use 'simrat39/rust-tools.nvim'
+  use 'numToStr/Comment.nvim'
+  use 'tpope/vim-fugitive'
+  use 'tpope/vim-surround'
 
   --
-  -- greeter
+  -- looking
   --
   use 'goolord/alpha-nvim'
-
-  --
-  -- tab/status line
-  --
   use 'nvim-lualine/lualine.nvim'
-
-  --
-  --colorscheme
-  --
   use 'projekt0n/github-nvim-theme'
   use 'EdenEast/nightfox.nvim'
+  use 'rebelot/kanagawa.nvim'
 
   --
   -- treesitter
@@ -118,13 +109,14 @@ return packer.startup(function(use)
   --
   -- notes
   --
-  use {
-    "nvim-neorg/neorg",
-    tags = "v2.0.0",
-    priority = 30,
-  }
-
-  use 'jackMort/ChatGPT.nvim'
+  -- use {
+  --   "nvim-neorg/neorg",
+  --   tags = "v2.0.0",
+  --   priority = 30,
+  -- }
+  -- use 'karb94/neoscroll.nvim'
+  -- use 'simrat39/rust-tools.nvim'
+  -- use {'3rd/image.nvim'}
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins

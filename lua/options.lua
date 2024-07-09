@@ -1,6 +1,7 @@
 local options = {
-  shiftwidth    = 8,
-  tabstop       = 8,
+  shiftwidth    = 4,
+  tabstop       = 4,
+  expandtab     = true;
   mouse         = "a",
   smartindent   = true,
   smartcase     = true,
@@ -27,6 +28,12 @@ local g_options = {
   cpp_attributes_highlight = 1,
   cpp_member_highlight     = 1,
   cpp_simple_highlight     = 1,
+  mapleader                = ' ',
+}
+
+local vim_cmds = {
+  'set laststatus=3',
+  -- 'colorscheme nightfox',
 }
 
 for k, v in pairs(options) do
@@ -37,5 +44,6 @@ for k, v in pairs(g_options) do
   vim.g[k] = v
 end
 
-vim.cmd('set laststatus=3')
-vim.cmd [[colorscheme nightfox]]
+for _, cmd in ipairs(vim_cmds) do
+  vim.cmd(cmd)
+end

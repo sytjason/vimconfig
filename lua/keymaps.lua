@@ -39,9 +39,8 @@ map('n', '<F3>', ':TagbarToggle<CR>')
 map('n', '<F4>', ':ToggleTerm<CR>')
 map('t', '<F4>', [[<C-\><C-n> <Cmd>ToggleTerm<CR>]])
 
+-- renamer
+map('n', '<leader>rn', '<cmd>lua require("renamer").rename()<cr>')
+map('v', '<leader>rn', '<cmd>lua require("renamer").rename()<cr>')
 -- Open work note
-map('n', '<F5>', ":Neorg workspace work<CR>:cd %:h<CR>")
-
--- Commenter
-map('n', '<C-_>', 'gcc')
-map('v', '<C-_>', 'gc')
+-- map('n', '<F5>', ":Neorg workspace work<CR>:cd %:h<CR>")

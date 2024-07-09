@@ -11,10 +11,11 @@ for _, sign in ipairs(signs) do
   vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = "" })
 end
 
-
 local diag_config = {
-  -- disable virtual text
-  virtual_text = false,
+  virtual_text = {
+    spacing = 20,
+    severity = vim.diagnostic.severity.ERROR
+  },
   -- show signs
   signs = {
     active = signs,
@@ -130,3 +131,7 @@ _lspconfig.pylsp.setup{
   capabilities = vim.lsp.protocol.make_client_capabilities()
 }
 
+_lspconfig.gopls.setup{
+  on_attach = _on_attach,
+  capabilities = vim.lsp.protocol.make_client_capabilities()
+}
