@@ -3,5 +3,6 @@ if not status_ok then return end
 
 _toggle_term.setup{
   direction = "float",
+  open_mapping = [[<F4>]],
 }
 

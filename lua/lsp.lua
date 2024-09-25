@@ -43,7 +43,7 @@ vim.diagnostic.config(diag_config)
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
-local _on_attach = function(_, bufnr)
+local _on_attach = function(client, bufnr)
   local opts = { noremap = true, silent = true }
   vim.api.nvim_buf_set_keymap(bufnr, "n", "[d", '<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, "n", "]d", '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>', opts)
@@ -64,6 +64,12 @@ local _on_attach = function(_, bufnr)
     '<cmd>lua vim.diagnostic.open_float()<CR>',
     opts
   )
+
+  -- nvim-navic
+  if client.server_capabilities.documentSymbolProvider then
+    local navic = require("nvim-navic")
+    navic.attach(client, bufnr)
+  end
 end
 
 
@@ -108,11 +114,6 @@ _lspconfig['lua_ls'].setup{
       },
     },
   },
-}
-
-_lspconfig.astro.setup{
-  on_attach = _on_attach,
-  capabilities = vim.lsp.protocol.make_client_capabilities(),
 }
 
 _lspconfig.bashls.setup{

@@ -69,17 +69,26 @@ return packer.startup(function(use)
   -- looking
   --
   use 'goolord/alpha-nvim'
-  use 'nvim-lualine/lualine.nvim'
   use 'projekt0n/github-nvim-theme'
   use 'EdenEast/nightfox.nvim'
   use 'rebelot/kanagawa.nvim'
 
   --
+  -- status bar
+  --
+  -- use 'nvim-lualine/lualine.nvim'
+  use 'rebelot/heirline.nvim'
+  use "b0o/incline.nvim"
+  use 'SmiteshP/nvim-navic'
+
+  --
   -- treesitter
   --
-  use 'nvim-treesitter/nvim-treesitter'
-  use 'nvim-treesitter/nvim-treesitter-refactor'
-  use 'nvim-treesitter/nvim-treesitter-context'
+  use {
+    'nvim-treesitter/nvim-treesitter-refactor',
+    requires = {'nvim-treesitter/nvim-treesitter'},
+  }
+  -- use 'nvim-treesitter/nvim-treesitter-context'
 
   --
   -- lsp
