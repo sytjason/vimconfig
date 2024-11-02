@@ -39,3 +39,6 @@ map('n', '<F3>', ':TagbarToggle<CR>')
 -- renamer
 map('n', '<leader>rn', '<cmd>lua require("renamer").rename()<cr>')
 map('v', '<leader>rn', '<cmd>lua require("renamer").rename()<cr>')
+
+-- toggle line num
+map('n', '<leader>nu', ':set rnu!<cr>')

@@ -4,7 +4,7 @@ if not status_ok then
 end
 treesitter.setup {
   -- A list of parser names, or "all"
-  ensure_installed = { "bash", "c", "cpp", "css", "diff", "html", "lua", "make", "python", "typescript", "tsx", "jsonc" },
+  ensure_installed = { "bash", "c", "cpp", "css", "diff", "html", "lua", "make", "python", "typescript", "tsx", "jsonc", "vimdoc", "luadoc", "vim", "lua", "markdown" },
 
   -- Automatically install missing parsers when entering buffer
   -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
@@ -33,6 +33,7 @@ treesitter.setup {
   refactor = {
     highlight_definitions = {
       enable = true,
+      disable = "help",
       -- Set to false if you have an `updatetime` of ~100.
       clear_on_cursor_move = true,
     },

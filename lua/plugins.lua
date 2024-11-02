@@ -77,7 +77,9 @@ return packer.startup(function(use)
   -- status bar
   --
   -- use 'nvim-lualine/lualine.nvim'
-  use 'rebelot/heirline.nvim'
+  use {'rebelot/heirline.nvim',
+    requires = {'lewis6991/gitsigns.nvim'},
+  }
   use "b0o/incline.nvim"
   use 'SmiteshP/nvim-navic'
 
@@ -116,16 +118,12 @@ return packer.startup(function(use)
   use 'rafamadriz/friendly-snippets'
 
   --
-  -- notes
+  -- misc
   --
-  -- use {
-  --   "nvim-neorg/neorg",
-  --   tags = "v2.0.0",
-  --   priority = 30,
-  -- }
-  -- use 'karb94/neoscroll.nvim'
-  -- use 'simrat39/rust-tools.nvim'
-  -- use {'3rd/image.nvim'}
+  use {
+    "m4xshen/hardtime.nvim",
+    reuires = {"MunifTanjim/nui.nvim","nvim-lua/plenary.nvim"},
+  }
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
