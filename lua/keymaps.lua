@@ -20,7 +20,7 @@ map('n', '<leader>dh', ':DiffviewFileHistory<CR>')
 
 -- Neo-tree
 map('n', '<F2>', ':Neotree toggle<CR>')
-map('n', '<leader>', ':Neotree reveal<CR>')
+map('n', '<leader>rv', ':Neotree reveal<CR>')
 
 -- Telescope
 local builtin = require('telescope.builtin')

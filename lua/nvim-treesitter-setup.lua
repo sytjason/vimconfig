@@ -19,7 +19,7 @@ treesitter.setup {
   incremental_selection = {
     enable = true,
     keymaps = {
-      init_selection = "<leader>si", -- set to `false` to disable one of the mappings
+      init_selection = "B", -- set to `false` to disable one of the mappings
       node_incremental = "<leader>ss",
       scope_incremental = "<leader>SS",
       node_decremental = "<leader>sk",
@@ -35,12 +35,6 @@ treesitter.setup {
       enable = true,
       -- Set to false if you have an `updatetime` of ~100.
       clear_on_cursor_move = true,
-    },
-    smart_rename = {
-      enable = true,
-      keymaps = {
-        smart_rename = "<leader>rn",
-      },
     },
     navigation = {
       enable = true,
