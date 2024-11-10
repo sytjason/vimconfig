@@ -34,9 +34,10 @@ map('v', "<A-k>", ":move '<-2<CR>gv-gv")
 map('n', '<leader>dv', ':DiffviewOpen<CR>')
 map('n', '<leader>dh', ':DiffviewFileHistory<CR>')
 
--- Neo-tree
-map('n', '<F2>', ':Neotree toggle<CR>')
-map('n', '<leader>rv', ':Neotree reveal<CR>')
+-- file explorer
+map ('n', '<c-f>', ':Oil<CR>')
+-- map('n', '<F2>', ':Neotree toggle<CR>')
+-- map('n', '<leader>rv', ':Neotree reveal<CR>')
 
 -- Telescope
 local builtin = require('telescope.builtin')
@@ -50,7 +51,7 @@ map('n', '<leader>gd', builtin.lsp_definitions)
 map('n', '<leader>gi', builtin.lsp_implementations)
 
 -- Tagbar
-map('n', '<F3>', ':TagbarToggle<CR>')
+-- map('n', '<F3>', ':TagbarToggle<CR>')
 
 -- renamer
 map('n', '<leader>rn', '<cmd>lua require("renamer").rename()<cr>')
