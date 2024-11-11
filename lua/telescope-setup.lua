@@ -10,7 +10,10 @@ telescope.setup {
     prompt_prefix = " ",
     selection_caret = " ",
     path_display = { "smart" },
-
+    theme = "ivy",
+    layout_config = {
+      preview_width = 0.6,
+    },
     mappings = {
       i = {
         ["<C-n>"] = actions.cycle_history_next,
@@ -88,7 +91,10 @@ telescope.setup {
     },
     grep_string = {
       theme = "ivy",
-    }
+    },
+    keymaps = {
+      theme = "ivy",
+    },
   },
 }
 
