@@ -64,7 +64,10 @@ return packer.startup(function(use)
   use 'numToStr/Comment.nvim'
   use 'tpope/vim-fugitive'
   use 'tpope/vim-surround'
-
+  use {
+    'echasnovski/mini.nvim',
+    version = false
+  }
   --
   -- looking
   --
@@ -77,7 +80,8 @@ return packer.startup(function(use)
   -- status bar
   --
   -- use 'nvim-lualine/lualine.nvim'
-  use {'rebelot/heirline.nvim',
+  use {
+    'rebelot/heirline.nvim',
     requires = {'lewis6991/gitsigns.nvim'},
   }
   use "b0o/incline.nvim"
