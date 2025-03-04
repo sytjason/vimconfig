@@ -23,7 +23,6 @@ autocmd BufWritePost plugins.lua source <afile> | PackerSync
 augroup end
 ]]
 
-
 -- Use a protected call so we don't error out on first use
 local status_ok, packer = pcall(require, "packer")
 if not status_ok then
@@ -48,7 +47,6 @@ return packer.startup(function(use)
   use {'nvim-neo-tree/neo-tree.nvim', branch = "v3.x"}
   use 'stevearc/oil.nvim'
   use 'preservim/tagbar'
-  use 'nvim-telescope/telescope.nvim'
   use 'sindrets/diffview.nvim'
   use 'AndrewRadev/linediff.vim'
   use 'kyazdani42/nvim-web-devicons'
@@ -57,6 +55,17 @@ return packer.startup(function(use)
   use 'gpanders/editorconfig.nvim'
   use 'jbyuki/venn.nvim'
   use 'filipdutescu/renamer.nvim'
+
+  --
+  -- Selector
+  --
+  use 'nvim-telescope/telescope.nvim'
+
+  --
+  -- AI
+  --
+  use 'github/copilot.vim'
+  use 'CopilotC-Nvim/CopilotChat.nvim'
 
   --
   -- editing
@@ -68,6 +77,7 @@ return packer.startup(function(use)
     'echasnovski/mini.nvim',
     version = false
   }
+
   --
   -- looking
   --
@@ -120,14 +130,6 @@ return packer.startup(function(use)
   use 'hrsh7th/cmp-nvim-lua'
   use 'saadparwaiz1/cmp_luasnip'
   use 'rafamadriz/friendly-snippets'
-
-  --
-  -- misc
-  --
-  use {
-    "m4xshen/hardtime.nvim",
-    reuires = {"MunifTanjim/nui.nvim","nvim-lua/plenary.nvim"},
-  }
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins

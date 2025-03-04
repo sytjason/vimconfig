@@ -50,15 +50,15 @@ map('n', '<leader>rr', builtin.lsp_references)
 map('n', '<leader>gd', builtin.lsp_definitions)
 map('n', '<leader>gi', builtin.lsp_implementations)
 
--- Tagbar
--- map('n', '<F3>', ':TagbarToggle<CR>')
-
 -- renamer
 map('n', '<leader>rn', '<cmd>lua require("renamer").rename()<cr>')
 map('v', '<leader>rn', '<cmd>lua require("renamer").rename()<cr>')
 
 -- toggle line num
 map('n', '<leader>nu', toggleLinenum)
+
+-- copilot
+map('n', '<leader>cp', ':CopilotChatToggle<CR>')
 
 -- toggleterm easy navigation
 function _G.set_terminal_keymaps()
