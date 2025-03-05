@@ -169,11 +169,6 @@ local FileFlags = {
   },
 }
 
--- Now, let's say that we want the filename color to change if the buffer is
--- modified. Of course, we could do that directly using the FileName.hl field,
--- but we'll see how easy it is to alter existing components using a "modifier"
--- component
-
 local FileNameModifer = {
   hl = function()
     if vim.bo.modified then
@@ -262,16 +257,16 @@ local LSPActive = {
   update = {'LspAttach', 'LspDetach'},
 
   -- You can keep it simple,
-  -- provider = " [LSP]",
+  provider = " [LSP]",
 
   -- Or complicate things a bit and get the servers names
-  provider = function()
-    local names = {}
-    for i, server in pairs(vim.lsp.get_active_clients({ bufnr = 0 })) do
-      table.insert(names, server.name)
-    end
-    return " [" .. table.concat(names, " ") .. "]"
-  end,
+  -- provider = function()
+  --   local names = {}
+  --   for _, server in pairs(vim.lsp.get_clients({ bufnr = 0 })) do
+  --     table.insert(names, server.name)
+  --   end
+  --   return " [" .. table.concat(names, " ") .. "]"
+  -- end,
   hl = { fg = "green", bold = true },
 }
 
