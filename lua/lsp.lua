@@ -1,15 +1,5 @@
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-local signs = {
-  { name = "DiagnosticSignError", text = "" },
-  { name = "DiagnosticSignWarn", text = "" },
-  { name = "DiagnosticSignHint", text = "" },
-  { name = "DiagnosticSignInfo", text = "" },
-}
-
-for _, sign in ipairs(signs) do
-  vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = "" })
-end
 
 local diag_config = {
   virtual_text = {
@@ -18,7 +8,18 @@ local diag_config = {
   },
   -- show signs
   signs = {
-    active = signs,
+    text = {
+      [vim.diagnostic.severity.ERROR] = " ",
+      [vim.diagnostic.severity.WARN] = " ",
+      [vim.diagnostic.severity.INFO] = " ",
+      [vim.diagnostic.severity.HINT] = "󰠠 ",
+    },
+    linehl = {
+      [vim.diagnostic.severity.ERROR] = "Error",
+      [vim.diagnostic.severity.WARN] = "Warn",
+      [vim.diagnostic.severity.INFO] = "Info",
+      [vim.diagnostic.severity.HINT] = "Hint",
+    },
   },
   update_in_insert = true,
   underline = true,
@@ -75,21 +76,13 @@ end
 
 local status_ok, _lspconfig = pcall(require, "lspconfig")
 if not status_ok then return end
-
-local _cmd
-if vim.fn.hostname() == "SHNBS"
-then
-  _cmd = {"/home/linuxbrew/.linuxbrew/bin/clangd"}
-else
-  _cmd = {"clangd"}
-end
-
 _lspconfig['clangd'].setup {
   on_attach = _on_attach,
   capabilities = vim.lsp.protocol.make_client_capabilities(),
   cmd = _cmd,
   filetypes = {"c", "cpp", "proto"},
 }
+
 
 _lspconfig['lua_ls'].setup{
   on_attach = _on_attach,
