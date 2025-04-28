@@ -569,7 +569,7 @@ local ShowCmd = {
 local Align = { provider = "%=" }
 local Space = { provider = " " }
 
-ViMode = utils.surround({ "", "" }, "bright_bg", { ViMode, Snippets })
+ViMode = utils.surround({ "", "" }, "bright_bg", { ViMode })
 
 local DefaultStatusline = {
   ViMode, Space, FileNameBlock, Space, Git, Space, Align,
