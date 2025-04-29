@@ -2,9 +2,8 @@
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 
 local diag_config = {
-  virtual_text = {
-    spacing = 20,
-    severity = vim.diagnostic.severity.ERROR
+  virtual_lines = {
+    current_line = true
   },
   -- show signs
   signs = {
