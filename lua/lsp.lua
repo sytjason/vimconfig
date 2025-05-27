@@ -38,8 +38,8 @@ vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
   border = "rounded",
 })
 
-vim.diagnostic.config(diag_config)
 
+vim.diagnostic.config(diag_config)
 vim.lsp.enable({'clangd', 'lua_ls', 'bashls', 'jsonls', 'rust_analyzer', 'pylsp', 'gopls'})
 
 ---------------------------------------

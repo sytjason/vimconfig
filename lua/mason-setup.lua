@@ -3,13 +3,15 @@ if not status_ok then
   return
 end
 
+-- :h mason-lspconfig-server-map
 local servers_map = {
   ["bash-language-server"] = "bashls",
   ["clangd"]               = "clangd",
   ["python-lsp-server"]    = "pylsp",
   ["gopls"]                = "gopls",
   ["lua-language-server"]  = "lua_ls",
-  ["json-lsp"]             = "jsonls"
+  ["json-lsp"]             = "jsonls",
+  ["rust-analyzer"]        = "rust-analyzer",
 }
 
 local ensured = {}
