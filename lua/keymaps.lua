@@ -39,6 +39,11 @@ map ('n', '<c-f>', ':Oil<CR>')
 -- map('n', '<F2>', ':Neotree toggle<CR>')
 -- map('n', '<leader>rv', ':Neotree reveal<CR>')
 
+-- toggle diagnostic
+map ('n', '<leader>td', function ()
+  vim.diagnostic.enable(not vim.diagnostic.is_enabled())
+end)
+
 -- Telescope
 local builtin = require('telescope.builtin')
 map('n', '<leader>ff', builtin.find_files)
