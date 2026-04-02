@@ -62,8 +62,13 @@ map('v', '<leader>rn', '<cmd>lua require("renamer").rename()<cr>')
 -- toggle line num
 map('n', '<leader>nu', toggleLinenum)
 
--- copilot
-map('n', '<leader>cp', ':CopilotChatToggle<CR>')
+-- agentic
+map('n', '<leader>cc', function() require("agentic").toggle() end)
+map({ "n", "v" }, "<C-'>", function() require("agentic").add_selection_or_file_to_context() end)
+map('n', "<C-,>", function() require("agentic").new_session() end)
+map('n', "<leader>cr", function() require("agentic").restore_session() end)
+map("n", "<leader>ad", function() require("agentic").add_current_line_diagnostics() end)
+map("n", "<leader>aD", function() require("agentic").add_buffer_diagnostics() end)
 
 -- toggleterm easy navigation
 function _G.set_terminal_keymaps()

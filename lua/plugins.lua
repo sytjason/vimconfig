@@ -66,6 +66,7 @@ return packer.startup(function(use)
   --
   use 'github/copilot.vim'
   use 'CopilotC-Nvim/CopilotChat.nvim'
+  use 'carlos-algms/agentic.nvim'
 
   --
   -- editing
