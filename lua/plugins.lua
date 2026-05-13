@@ -1,140 +1,97 @@
-local fn = vim.fn
-
--- Automatically install packer
-local install_path = fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
-if fn.empty(fn.glob(install_path)) > 0 then
-  PACKER_BOOTSTRAP = fn.system {
-    "git",
-    "clone",
-    "--depth",
-    "1",
-    "https://github.com/wbthomason/packer.nvim",
-    install_path,
-  }
-  print "Installing packer close and reopen Neovim..."
-  vim.cmd [[packadd packer.nvim]]
-end
-
--- Autocommand that reloads neovim whenever you save the plugins.lua file
-vim.cmd [[
-augroup packer_user_config
-autocmd!
-autocmd BufWritePost plugins.lua source <afile> | PackerSync
-augroup end
-]]
-
--- Use a protected call so we don't error out on first use
-local status_ok, packer = pcall(require, "packer")
-if not status_ok then
-  return
-end
-
--- Have packer use a popup window
-packer.init {
-  display = {
-    open_fn = function()
-      return require("packer.util").float { border = "rounded" }
-    end,
-  },
-}
-
-return packer.startup(function(use)
-  use 'wbthomason/packer.nvim'
-  use "nvim-lua/popup.nvim" -- An implementation of the Popup API from vim in Neovim
-  use 'MunifTanjim/nui.nvim' -- Required by neotree
-  use 'nvim-lua/plenary.nvim'
-  use 'cossonleo/dirdiff.nvim'
-  use {'nvim-neo-tree/neo-tree.nvim', branch = "v3.x"}
-  use 'stevearc/oil.nvim'
-  use 'preservim/tagbar'
-  use 'sindrets/diffview.nvim'
-  use 'AndrewRadev/linediff.vim'
-  use 'kyazdani42/nvim-web-devicons'
-  use 'lukas-reineke/indent-blankline.nvim'
-  use {"akinsho/toggleterm.nvim", tag = '*'}
-  use 'gpanders/editorconfig.nvim'
-  use 'jbyuki/venn.nvim'
-  use 'filipdutescu/renamer.nvim'
-
-  --
-  -- Selector
-  --
-  use 'nvim-telescope/telescope.nvim'
-
-  --
-  -- AI
-  --
-  use 'github/copilot.vim'
-  use 'CopilotC-Nvim/CopilotChat.nvim'
-  use 'carlos-algms/agentic.nvim'
-
-  --
-  -- editing
-  --
-  use 'numToStr/Comment.nvim'
-  use 'tpope/vim-fugitive'
-  use 'tpope/vim-surround'
-  use {
-    'echasnovski/mini.nvim',
-    version = false
-  }
-
-  --
-  -- looking
-  --
-  use 'goolord/alpha-nvim'
-  use 'projekt0n/github-nvim-theme'
-  use 'EdenEast/nightfox.nvim'
-  use 'rebelot/kanagawa.nvim'
-
-  --
-  -- status bar
-  --
-  -- use 'nvim-lualine/lualine.nvim'
-  use {
-    'rebelot/heirline.nvim',
-    requires = {'lewis6991/gitsigns.nvim'},
-  }
-  use "b0o/incline.nvim"
-  use 'SmiteshP/nvim-navic'
-
-  --
-  -- treesitter
-  --
-  use {
-    'nvim-treesitter/nvim-treesitter-refactor',
-    requires = {'nvim-treesitter/nvim-treesitter'},
-  }
-  -- use 'nvim-treesitter/nvim-treesitter-context'
-
-  --
-  -- lsp
-  --
-  use 'neovim/nvim-lspconfig'
-  use 'williamboman/mason.nvim'
-  use 'williamboman/mason-lspconfig.nvim'
-  use 'onsails/lspkind.nvim'
-
-  --
-  -- auto completion
-  --
-  use 'hrsh7th/nvim-cmp'
-  use 'hrsh7th/cmp-nvim-lsp'
-  use 'hrsh7th/cmp-buffer'
-  use 'hrsh7th/cmp-path'
-  use 'hrsh7th/cmp-cmdline'
-
-  --
-  -- snippets
-  --
-  use 'L3MON4D3/LuaSnip'
-  use 'hrsh7th/cmp-nvim-lua'
-  use 'saadparwaiz1/cmp_luasnip'
-  use 'rafamadriz/friendly-snippets'
-
-  -- Automatically set up your configuration after cloning packer.nvim
-  -- Put this at the end after all plugins
-  if PACKER_BOOTSTRAP then
-    require("packer").sync()
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  local out = vim.fn.system({
+    "git", "clone", "--filter=blob:none", "--branch=stable",
+    "https://github.com/folke/lazy.nvim.git", lazypath,
+  })
+  if vim.v.shell_error ~= 0 then
+    vim.api.nvim_echo({
+      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+      { out, "WarningMsg" },
+      { "\nPress any key to exit...", "ErrorMsg" },
+    }, true, {})
+    vim.fn.getchar()
+    os.exit(1)
   end
-end)
+end
+vim.opt.rtp:prepend(lazypath)
+
+require("lazy").setup({
+  "nvim-lua/popup.nvim",
+  "MunifTanjim/nui.nvim",
+  "nvim-lua/plenary.nvim",
+  { "nvim-neo-tree/neo-tree.nvim", branch = "v3.x" },
+  "stevearc/oil.nvim",
+  "preservim/tagbar",
+  -- "sindrets/diffview.nvim",
+  { "esmuellert/codediff.nvim", cmd = "CodeDiff" },
+  "AndrewRadev/linediff.vim",
+  "kyazdani42/nvim-web-devicons",
+  "lukas-reineke/indent-blankline.nvim",
+  { "akinsho/toggleterm.nvim", version = "*" },
+  "gpanders/editorconfig.nvim",
+  "jbyuki/venn.nvim",
+  "filipdutescu/renamer.nvim",
+  "folke/snacks.nvim",
+
+  -- Selector
+  "nvim-telescope/telescope.nvim",
+
+  -- AI
+  "zbirenbaum/copilot.lua",
+  "CopilotC-Nvim/CopilotChat.nvim",
+  "carlos-algms/agentic.nvim",
+  "folke/sidekick.nvim",
+
+  -- editing
+  "numToStr/Comment.nvim",
+  "tpope/vim-fugitive",
+  "tpope/vim-surround",
+  { "echasnovski/mini.nvim", version = false },
+
+  -- looking
+  "goolord/alpha-nvim",
+  "projekt0n/github-nvim-theme",
+  "EdenEast/nightfox.nvim",
+  "rebelot/kanagawa.nvim",
+
+  -- status bar
+  -- { "nvim-lualine/lualine.nvim" },
+  {
+    "rebelot/heirline.nvim",
+    dependencies = { "lewis6991/gitsigns.nvim" },
+  },
+  "b0o/incline.nvim",
+  "SmiteshP/nvim-navic",
+
+  -- treesitter
+  {
+  'nvim-treesitter/nvim-treesitter',
+  lazy = false,
+  build = ':TSUpdate'
+  },
+  -- {
+  --   "nvim-treesitter/nvim-treesitter-refactor",
+  --   dependencies = { "nvim-treesitter/nvim-treesitter" },
+  -- },
+  -- { "nvim-treesitter/nvim-treesitter-context" },
+
+  -- lsp
+  "neovim/nvim-lspconfig",
+  "williamboman/mason.nvim",
+  "williamboman/mason-lspconfig.nvim",
+  "onsails/lspkind.nvim",
+
+  -- auto completion
+  "hrsh7th/nvim-cmp",
+  "hrsh7th/cmp-nvim-lsp",
+  "hrsh7th/cmp-buffer",
+  "hrsh7th/cmp-path",
+  "hrsh7th/cmp-cmdline",
+
+  -- snippets
+  "L3MON4D3/LuaSnip",
+  "hrsh7th/cmp-nvim-lua",
+  "saadparwaiz1/cmp_luasnip",
+  "rafamadriz/friendly-snippets",
+})

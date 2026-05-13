@@ -9,5 +9,8 @@ agentic.setup {
     widget = {
       switch_model = "<leader>m",
     }
-  }
+  },
+  diff_preview = {
+    enabled = true
+  },
 }

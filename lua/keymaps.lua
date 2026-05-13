@@ -1,4 +1,4 @@
-local function map (mode, lhs, rhs)
+local function map(mode, lhs, rhs)
   vim.keymap.set(mode, lhs, rhs, {})
 end
 
@@ -25,22 +25,20 @@ map('n', '+', '<C-W>>')
 map('n', '_', '<C-W><')
 
 -- Move text up and down
-map('v', "J", ":move '>+1<CR>gv-gv")
-map('v', "K", ":move '<-2<CR>gv-gv")
-map('v', "<A-j>", ":move '>+1<CR>gv-gv")
-map('v', "<A-k>", ":move '<-2<CR>gv-gv")
+map('v', 'J', ":move '>+1<CR>gv-gv")
+map('v', 'K', ":move '<-2<CR>gv-gv")
+map('v', '<A-j>', ":move '>+1<CR>gv-gv")
+map('v', '<A-k>', ":move '<-2<CR>gv-gv")
 
--- Diffview
-map('n', '<leader>dv', ':DiffviewOpen<CR>')
-map('n', '<leader>dh', ':DiffviewFileHistory<CR>')
+-- CodeDiff
+map('n', '<leader>cd', ':CodeDiff<CR>')
+map('n', '<leader>ch', ':CodeDiff history<CR>')
 
 -- file explorer
-map ('n', '<c-f>', ':Oil<CR>')
--- map('n', '<F2>', ':Neotree toggle<CR>')
--- map('n', '<leader>rv', ':Neotree reveal<CR>')
+map('n', '<C-f>', ':Oil<CR>')
 
 -- toggle diagnostic
-map ('n', '<leader>td', function ()
+map('n', '<leader>td', function()
   vim.diagnostic.enable(not vim.diagnostic.is_enabled())
 end)
 
@@ -56,23 +54,19 @@ map('n', '<leader>gd', builtin.lsp_definitions)
 map('n', '<leader>gi', builtin.lsp_implementations)
 
 -- renamer
-map('n', '<leader>rn', '<cmd>lua require("renamer").rename()<cr>')
-map('v', '<leader>rn', '<cmd>lua require("renamer").rename()<cr>')
+map({ 'n', 'v' }, '<leader>rn', '<cmd>lua require("renamer").rename()<cr>')
 
 -- toggle line num
 map('n', '<leader>nu', toggleLinenum)
 
--- agentic
-map('n', '<leader>cc', function() require("agentic").toggle() end)
-map({ "n", "v" }, "<C-'>", function() require("agentic").add_selection_or_file_to_context() end)
-map('n', "<C-,>", function() require("agentic").new_session() end)
-map('n', "<leader>cr", function() require("agentic").restore_session() end)
-map("n", "<leader>ad", function() require("agentic").add_current_line_diagnostics() end)
-map("n", "<leader>aD", function() require("agentic").add_buffer_diagnostics() end)
+-- sidekick
+map({ 'n', 't' }, '<C-`>', function() require('sidekick.cli').toggle({ name = "copilot" }) end)
+map('v', '<C-,>', function() require("sidekick.cli").send({ msg = "{this}" }) end)
+map('n', '<C-.>', function() require("sidekick.cli").send({ msg = "{file}" }) end)
 
 -- toggleterm easy navigation
-function _G.set_terminal_keymaps()
-  local opts = {buffer = 0}
+local function set_terminal_keymaps()
+  local opts = { buffer = 0 }
   vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
   vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
   vim.keymap.set('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
@@ -80,5 +74,8 @@ function _G.set_terminal_keymaps()
   vim.keymap.set('t', '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
   vim.keymap.set('t', '<C-w>', [[<C-\><C-n><C-w>]], opts)
 end
-vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
 
+vim.api.nvim_create_autocmd('TermOpen', {
+  pattern = 'term://*',
+  callback = set_terminal_keymaps,
+})

@@ -94,6 +94,10 @@ cmp.setup{
   },
 }
 
+cmp.setup.filetype("AgenticInput", {
+  enabled = false,
+})
+
 -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
 --cmp.setup.cmdline(':', {
 --mapping = cmp.mapping.preset.cmdline(),

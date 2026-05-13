@@ -1,13 +1,7 @@
--- Required for image.nvim
--- package.path = package.path .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/share/lua/5.1/?/init.lua;"
--- package.path = package.path .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/share/lua/5.1/?.lua;"
-
--- Common editor setup
 require('plugins')
 require('options')
 require('keymaps')
 
--- Plugins setup
 require('diffview-setup')
 require('devicon-setup')
 require('align-setup')
@@ -28,7 +22,10 @@ require('toggleterm-setup')
 require('venn-setup')
 require('nightfox-setup')
 require('kanagawa-setup')
-require("comment-setup")
-require("copilotchat-setup")
-require("nvim-navic-setup")
-require("agentic-setup")
+require('comment-setup')
+require('copilot-setup')
+require('copilotchat-setup')
+require('nvim-navic-setup')
+require('sidekick-setup')
+require('snacks-setup')
+require('codediff-setup')
