@@ -81,28 +81,4 @@ vim.api.nvim_create_autocmd('TermOpen', {
   callback = set_terminal_keymaps,
 })
 
-local terminals = {}
-local function open_terminal()
-  local Terminal = require('toggleterm.terminal').Terminal
-  local tabpage = vim.api.nvim_get_current_tabpage()
-  local tab_term = terminals[tabpage]
-
-  if not tab_term then
-    terminals[tabpage] = Terminal:new {
-      go_back = false,
-    }
-    tab_term = terminals[tabpage]
-  end
-
-  -- we need to close all other terminals, otherwise this instance will try to join any other instance that is also in horizontal mode
-  for _,term in ipairs(terminals) do
-    if term ~= tab_term and term:is_open() then
-      term:toggle()
-    end
-  end
-
-  -- toggling a term sets tab focus, so we need to steal it back
-  vim.api.nvim_set_current_tabpage(tabpage)
-  tab_term:toggle()
-end
-map('n', '<leader>tt', open_terminal)
+map({'n' ,'t'}, '<c-\\>', function() require("toggleterm-setup").toggle_terminal() end)

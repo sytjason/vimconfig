@@ -70,7 +70,7 @@ require("lazy").setup({
   lazy = false,
   build = ':TSUpdate'
   },
-  -- {
+  -- { -- deprecated due to newer treesitter
   --   "nvim-treesitter/nvim-treesitter-refactor",
   --   dependencies = { "nvim-treesitter/nvim-treesitter" },
   -- },
