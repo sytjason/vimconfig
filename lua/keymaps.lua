@@ -35,7 +35,7 @@ map('n', '<leader>cd', ':CodeDiff<CR>')
 map('n', '<leader>ch', ':CodeDiff history<CR>')
 
 -- file explorer
-map('n', '<C-f>', ':Oil<CR>')
+map('n', '<C-f>', function() require("oil").toggle_float() end)
 
 -- toggle diagnostic
 map('n', '<leader>td', function()
@@ -63,6 +63,7 @@ map('n', '<leader>nu', toggleLinenum)
 map({ 'n', 't' }, '<C-`>', function() require('sidekick.cli').toggle({ name = "copilot" }) end)
 map('v', '<C-,>', function() require("sidekick.cli").send({ msg = "{this}" }) end)
 map('n', '<C-.>', function() require("sidekick.cli").send({ msg = "{file}" }) end)
+map('n', '<leader>l', function() require("sidekick.nes").apply() end)
 
 -- toggleterm easy navigation
 local function set_terminal_keymaps()

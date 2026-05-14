@@ -9,7 +9,7 @@ treesitter.setup {}
 -- Install parsers (no-op if already installed)
 treesitter.install {
   "bash", "c", "cpp", "css", "diff", "html", "lua", "make", "python",
-  "typescript", "tsx", "jsonc", "vimdoc", "luadoc", "vim", "markdown",
+  "typescript", "tsx", "vimdoc", "luadoc", "vim", "markdown",
 }
 
 -- Highlighting, folding, and indentation are now enabled per-filetype

@@ -4,6 +4,9 @@ if not status_ok then
 end
 
 sidekick.setup {
+  nes = {
+    enabled = true,
+  },
   cli = {
     win = {
       keys = {

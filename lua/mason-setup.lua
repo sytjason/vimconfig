@@ -8,10 +8,8 @@ local servers_map = {
   ["bash-language-server"] = "bashls",
   ["clangd"]               = "clangd",
   ["python-lsp-server"]    = "pylsp",
-  ["gopls"]                = "gopls",
   ["lua-language-server"]  = "lua_ls",
   ["json-lsp"]             = "jsonls",
-  ["rust-analyzer"]        = "rust-analyzer",
 }
 
 local ensured = {}
