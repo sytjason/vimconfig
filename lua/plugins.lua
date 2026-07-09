@@ -23,8 +23,6 @@ require("lazy").setup({
   { "nvim-neo-tree/neo-tree.nvim", branch = "v3.x" },
   "stevearc/oil.nvim",
   "preservim/tagbar",
-  -- "sindrets/diffview.nvim",
-  { "esmuellert/codediff.nvim", cmd = "CodeDiff" },
   "AndrewRadev/linediff.vim",
   "kyazdani42/nvim-web-devicons",
   "lukas-reineke/indent-blankline.nvim",
@@ -33,6 +31,22 @@ require("lazy").setup({
   "jbyuki/venn.nvim",
   "filipdutescu/renamer.nvim",
   "folke/snacks.nvim",
+
+  -- Git
+  -- "sindrets/diffview.nvim",
+  { "esmuellert/codediff.nvim", cmd = "CodeDiff" },
+  {
+    "NeogitOrg/neogit",
+    lazy = true,
+    dependencies = {
+      -- For a custom log pager
+      "m00qek/baleia.nvim",
+    },
+    cmd = "Neogit",
+    keys = {
+      { "<leader>gg", "<cmd>Neogit<cr>", desc = "Show Neogit UI" }
+    }
+  },
 
   -- Selector
   "nvim-telescope/telescope.nvim",

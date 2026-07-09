@@ -6,6 +6,11 @@ end
 sidekick.setup {
   nes = {
     enabled = true,
+    clear = {
+      -- events that clear the current next edit suggestion
+      events = { "TextChangedI", "InsertEnter" },
+      esc = false, -- clear next edit suggestions when pressing <Esc>
+    },
   },
   cli = {
     win = {

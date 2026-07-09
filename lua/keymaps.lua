@@ -30,8 +30,14 @@ map('v', 'K', ":move '<-2<CR>gv-gv")
 map('v', '<A-j>', ":move '>+1<CR>gv-gv")
 map('v', '<A-k>', ":move '<-2<CR>gv-gv")
 
+-- Lazy
+map('n', '<leader>ll', "<cmd>Lazy<cr>")
+
+-- Neogit
+map("n", "<leader>gg", "<cmd>Neogit<cr>")
+
 -- CodeDiff
-map('n', '<leader>cd', ':CodeDiff<CR>')
+map('n', '<leader>cc', ':CodeDiff<CR>')
 map('n', '<leader>ch', ':CodeDiff history<CR>')
 
 -- file explorer
@@ -60,10 +66,13 @@ map({ 'n', 'v' }, '<leader>rn', '<cmd>lua require("renamer").rename()<cr>')
 map('n', '<leader>nu', toggleLinenum)
 
 -- sidekick
-map({ 'n', 't' }, '<C-`>', function() require('sidekick.cli').toggle({ name = "copilot" }) end)
+map({ 'n', 't' }, '<C-`>', function() require('sidekick.cli').toggle({ name = "claude" }) end)
 map('v', '<C-,>', function() require("sidekick.cli").send({ msg = "{this}" }) end)
 map('n', '<C-.>', function() require("sidekick.cli").send({ msg = "{file}" }) end)
-map('n', '<leader>l', function() require("sidekick.nes").apply() end)
+map({'n', 'v'}, '<leader>l', function() require("sidekick.nes").apply() end)
+map({'n', 'v', 't', 's'}, '<C-q>', function() require("sidekick.nes").clear() end)
+map({'n', 'v', 't', 's'}, '<C-M-q>', function() require("sidekick.nes").toggle() end)
+map({'n', 'v', 't', 's'}, '<C-n>', function() require("sidekick.nes").jump() end)
 
 -- toggleterm easy navigation
 local function set_terminal_keymaps()
@@ -73,7 +82,7 @@ local function set_terminal_keymaps()
   vim.keymap.set('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
   vim.keymap.set('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
   vim.keymap.set('t', '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
-  vim.keymap.set('t', '<C-w>', [[<C-\><C-n><C-w>]], opts)
+  vim.keymap.set('t', '<C-x>', [[<C-\><C-n><C-w>]], opts)
 end
 
 vim.api.nvim_create_autocmd('TermOpen', {

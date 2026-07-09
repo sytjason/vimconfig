@@ -41,7 +41,7 @@ codediff.setup{
     cycle_next_file = true,             -- Wrap around when navigating files (]f/[f): false to stop at first/last
     jump_to_first_change = true,        -- Auto-scroll to first change when opening a diff: false to stay at same line
     highlight_priority = 100,           -- Priority for line-level diff highlights (increase to override LSP highlights)
-    compute_moves = false,              -- Detect moved code blocks (opt-in, matches VSCode experimental.showMoves)
+    compute_moves = true,              -- Detect moved code blocks (opt-in, matches VSCode experimental.showMoves)
   },
 
   -- Explorer panel configuration
