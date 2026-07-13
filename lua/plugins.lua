@@ -52,8 +52,8 @@ require("lazy").setup({
   "nvim-telescope/telescope.nvim",
 
   -- AI
-  "zbirenbaum/copilot.lua",
-  "CopilotC-Nvim/CopilotChat.nvim",
+  -- "zbirenbaum/copilot.lua",
+  -- "CopilotC-Nvim/CopilotChat.nvim",
   "carlos-algms/agentic.nvim",
   "folke/sidekick.nvim",
 
