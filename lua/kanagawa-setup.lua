@@ -30,7 +30,6 @@ require('kanagawa').setup({
       PmenuThumb = { bg = theme.ui.bg_p2 },
     }
   end,
-  theme = "dragon",
   colors = {
     theme = {
       all = {

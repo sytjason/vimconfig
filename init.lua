@@ -1,5 +1,6 @@
-require('plugins')
+-- options first: mapleader must be set before lazy.nvim registers any `keys` specs
 require('options')
+require('plugins')
 require('keymaps')
 
 require('diffview-setup')
@@ -29,3 +30,4 @@ require('nvim-navic-setup')
 require('sidekick-setup')
 require('snacks-setup')
 require('codediff-setup')
+require('aerial-setup')

@@ -151,3 +151,50 @@ codediff.setup{
     },
   },
 }
+
+-- Keymaps
+vim.keymap.set('n', '<leader>cc', '<cmd>CodeDiff<CR>', { desc = "CodeDiff" })
+vim.keymap.set('n', '<leader>ch', '<cmd>CodeDiff history<CR>', { desc = "CodeDiff history" })
+
+-- Compatibility shim for neogit's codediff integration.
+--
+-- neogit/integrations/codediff.lua still builds the pre-4.x SessionConfig shape
+-- (mode / original_path / modified_path / explorer_data). codediff 4.x wants
+-- `panel = { name, data }` plus `original`/`modified` as Path tables, so opening
+-- a diff from Neogit dies in helpers.prepare_buffer with
+-- "attempt to index local 'ref' (a nil value)". Translate the old shape on the
+-- way in; drop this once neogit ships an updated integration.
+local ok_view, view = pcall(require, "codediff.ui.view")
+local ok_path, cd_path = pcall(require, "codediff.core.path")
+
+if ok_view and ok_path and not view.__legacy_session_shim then
+  local create = view.create
+
+  view.create = function(session_config, filetype, on_ready)
+    if type(session_config) == "table" and type(session_config.original) ~= "table" then
+      local cfg = {}
+      for k, v in pairs(session_config) do
+        cfg[k] = v
+      end
+
+      local root = cfg.git_root
+      cfg.original = cd_path.make_ref(cfg.original_path, root)
+      cfg.modified = cd_path.make_ref(cfg.modified_path, root)
+
+      if cfg.explorer_data then
+        cfg.panel = { name = "explorer", data = cfg.explorer_data }
+      elseif cfg.history_data then
+        cfg.panel = { name = "history", data = cfg.history_data }
+      end
+
+      cfg.mode, cfg.original_path, cfg.modified_path = nil, nil, nil
+      cfg.explorer_data, cfg.history_data = nil, nil
+
+      session_config = cfg
+    end
+
+    return create(session_config, filetype, on_ready)
+  end
+
+  view.__legacy_session_shim = true
+end

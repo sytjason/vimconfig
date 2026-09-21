@@ -1,7 +1,4 @@
 local diag_config = {
-  virtual_lines = {
-    current_line = true
-  },
   signs = {
     text = {
       [vim.diagnostic.severity.ERROR] = " ",
@@ -39,3 +36,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 vim.diagnostic.config(diag_config)
 vim.lsp.enable({ 'clangd', 'lua_ls', 'bashls', 'jsonls', 'pylsp' })
+
+vim.keymap.set('n', '<leader>td', function()
+  vim.diagnostic.enable(not vim.diagnostic.is_enabled())
+end, { desc = "Toggle diagnostics" })

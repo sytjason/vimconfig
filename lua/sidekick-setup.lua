@@ -31,3 +31,17 @@ sidekick.setup {
   }
 }
 
+-- Keymaps
+vim.keymap.set({ 'n', 't' }, '<C-`>', function()
+  require('sidekick.cli').toggle({ name = "claude" })
+end, { desc = "Toggle claude CLI" })
+vim.keymap.set('v', '<C-,>', function()
+  require("sidekick.cli").send({ msg = "{this}" })
+end, { desc = "Send selection to CLI" })
+vim.keymap.set('n', '<C-.>', function()
+  require("sidekick.cli").send({ msg = "{file}" })
+end, { desc = "Send file to CLI" })
+-- vim.keymap.set({ 'n', 'v' }, '<leader>l', function() require("sidekick.nes").apply() end)
+-- vim.keymap.set({ 'n', 'v', 't', 's' }, '<C-q>', function() require("sidekick.nes").clear() end)
+-- vim.keymap.set({ 'n', 'v', 't', 's' }, '<C-M-q>', function() require("sidekick.nes").toggle() end)
+-- vim.keymap.set({ 'n', 'v', 't', 's' }, '<C-n>', function() require("sidekick.nes").jump() end)

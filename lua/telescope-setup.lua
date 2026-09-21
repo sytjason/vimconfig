@@ -4,13 +4,14 @@ if not status_ok then
 end
 
 local actions = require "telescope.actions"
+local themes = require "telescope.themes"
 
 telescope.setup {
-  defaults = {
+  -- ivy as the global default: merge the theme's own opts into `defaults`.
+  defaults = vim.tbl_deep_extend("force", themes.get_ivy(), {
     prompt_prefix = " ",
     selection_caret = " ",
     path_display = { "smart" },
-    theme = "ivy",
     layout_config = {
       preview_width = 0.6,
     },
@@ -78,23 +79,26 @@ telescope.setup {
         ["?"] = actions.which_key,
       },
     },
-  },
-  pickers = {
-    find_files = {
-      theme = "ivy",
-    },
-    help_tags = {
-      theme = "ivy",
-    },
-    live_grep = {
-      theme = "ivy",
-    },
-    grep_string = {
-      theme = "ivy",
-    },
-    keymaps = {
-      theme = "ivy",
-    },
-  },
+  }),
 }
 
+local builtin = require('telescope.builtin')
+
+local function map(lhs, rhs, desc)
+  vim.keymap.set('n', lhs, rhs, { desc = desc })
+end
+
+map('<leader>ff', builtin.find_files, "Find files")
+map('<leader>zz', builtin.current_buffer_fuzzy_find, "Fuzzy find in buffer")
+map('<leader>gr', builtin.live_grep, "Live grep")
+map('<leader>gs', builtin.grep_string, "Grep string under cursor")
+map('<leader>fh', builtin.help_tags, "Help tags")
+map('<leader>km', builtin.keymaps, "Keymaps")
+map('<leader>rr', builtin.lsp_references, "LSP references")
+map('<leader>gd', builtin.lsp_definitions, "LSP definitions")
+map('<leader>gi', builtin.lsp_implementations, "LSP implementations")
+map('<leader>gb', builtin.git_branches, "Git branches")
+map('<leader>cm', builtin.commands, "Commands")
+map('<leader>ma', function() builtin.man_pages({ sections = { 'ALL' } }) end, "Man pages")
+map('<leader>ic', builtin.lsp_incoming_calls, "LSP incoming calls")
+map('<leader>oc', builtin.lsp_outgoing_calls, "LSP outgoing calls")

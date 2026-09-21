@@ -31,6 +31,7 @@ require("lazy").setup({
   "jbyuki/venn.nvim",
   "filipdutescu/renamer.nvim",
   "folke/snacks.nvim",
+  "stevearc/aerial.nvim",
 
   -- Git
   -- "sindrets/diffview.nvim",
@@ -62,12 +63,16 @@ require("lazy").setup({
   "tpope/vim-fugitive",
   "tpope/vim-surround",
   { "echasnovski/mini.nvim", version = false },
+  { url = "https://codeberg.org/andyg/leap.nvim" },
 
   -- looking
   "goolord/alpha-nvim",
   "projekt0n/github-nvim-theme",
-  "EdenEast/nightfox.nvim",
   "rebelot/kanagawa.nvim",
+  {
+    "olimorris/onedarkpro.nvim",
+    priority = 1000, -- Ensure it loads first
+  },
 
   -- status bar
   -- { "nvim-lualine/lualine.nvim" },
@@ -80,15 +85,11 @@ require("lazy").setup({
 
   -- treesitter
   {
-  'nvim-treesitter/nvim-treesitter',
-  lazy = false,
-  build = ':TSUpdate'
+    'nvim-treesitter/nvim-treesitter',
+    lazy = false,
+    build = ':TSUpdate'
   },
-  -- { -- deprecated due to newer treesitter
-  --   "nvim-treesitter/nvim-treesitter-refactor",
-  --   dependencies = { "nvim-treesitter/nvim-treesitter" },
-  -- },
-  -- { "nvim-treesitter/nvim-treesitter-context" },
+  { "nvim-treesitter/nvim-treesitter-textobjects", branch = "main" },
 
   -- lsp
   "neovim/nvim-lspconfig",
@@ -109,3 +110,5 @@ require("lazy").setup({
   "saadparwaiz1/cmp_luasnip",
   "rafamadriz/friendly-snippets",
 })
+
+vim.keymap.set('n', '<leader>ll', "<cmd>Lazy<cr>", { desc = "Open Lazy" })

@@ -45,3 +45,6 @@ renamer.setup {
   -- the LSP 'textDocument/rename' raw response as its parameter.
   handler = nil,
 }
+
+-- Keymaps
+vim.keymap.set({ 'n', 'v' }, '<leader>rn', function() renamer.rename() end, { desc = "Rename symbol" })

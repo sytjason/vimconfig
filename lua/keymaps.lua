@@ -1,3 +1,6 @@
+-- Core editor keymaps only.
+-- Plugin keymaps live in the corresponding *-setup.lua file.
+
 local function map(mode, lhs, rhs)
   vim.keymap.set(mode, lhs, rhs, {})
 end
@@ -19,10 +22,10 @@ map('n', '<C-h>', '<C-W>h')
 map('n', '<C-l>', '<C-W>l')
 
 -- resize windows
-map('n', '=', '<C-W>+')
 map('n', '-', '<C-W>-')
+map('n', '_', '<C-W>+')
+map('n', '=', '<C-W><')
 map('n', '+', '<C-W>>')
-map('n', '_', '<C-W><')
 
 -- Move text up and down
 map('v', 'J', ":move '>+1<CR>gv-gv")
@@ -30,64 +33,5 @@ map('v', 'K', ":move '<-2<CR>gv-gv")
 map('v', '<A-j>', ":move '>+1<CR>gv-gv")
 map('v', '<A-k>', ":move '<-2<CR>gv-gv")
 
--- Lazy
-map('n', '<leader>ll', "<cmd>Lazy<cr>")
-
--- Neogit
-map("n", "<leader>gg", "<cmd>Neogit<cr>")
-
--- CodeDiff
-map('n', '<leader>cc', ':CodeDiff<CR>')
-map('n', '<leader>ch', ':CodeDiff history<CR>')
-
--- file explorer
-map('n', '<C-f>', function() require("oil").toggle_float() end)
-
--- toggle diagnostic
-map('n', '<leader>td', function()
-  vim.diagnostic.enable(not vim.diagnostic.is_enabled())
-end)
-
--- Telescope
-local builtin = require('telescope.builtin')
-map('n', '<leader>ff', builtin.find_files)
-map('n', '<leader>gr', builtin.live_grep)
-map('n', '<leader>gs', builtin.grep_string)
-map('n', '<leader>fh', builtin.help_tags)
-map('n', '<leader>km', builtin.keymaps)
-map('n', '<leader>rr', builtin.lsp_references)
-map('n', '<leader>gd', builtin.lsp_definitions)
-map('n', '<leader>gi', builtin.lsp_implementations)
-
--- renamer
-map({ 'n', 'v' }, '<leader>rn', '<cmd>lua require("renamer").rename()<cr>')
-
 -- toggle line num
 map('n', '<leader>nu', toggleLinenum)
-
--- sidekick
-map({ 'n', 't' }, '<C-`>', function() require('sidekick.cli').toggle({ name = "claude" }) end)
-map('v', '<C-,>', function() require("sidekick.cli").send({ msg = "{this}" }) end)
-map('n', '<C-.>', function() require("sidekick.cli").send({ msg = "{file}" }) end)
-map({'n', 'v'}, '<leader>l', function() require("sidekick.nes").apply() end)
-map({'n', 'v', 't', 's'}, '<C-q>', function() require("sidekick.nes").clear() end)
-map({'n', 'v', 't', 's'}, '<C-M-q>', function() require("sidekick.nes").toggle() end)
-map({'n', 'v', 't', 's'}, '<C-n>', function() require("sidekick.nes").jump() end)
-
--- toggleterm easy navigation
-local function set_terminal_keymaps()
-  local opts = { buffer = 0 }
-  vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
-  vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
-  vim.keymap.set('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
-  vim.keymap.set('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
-  vim.keymap.set('t', '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
-  vim.keymap.set('t', '<C-x>', [[<C-\><C-n><C-w>]], opts)
-end
-
-vim.api.nvim_create_autocmd('TermOpen', {
-  pattern = 'term://*',
-  callback = set_terminal_keymaps,
-})
-
-map({'n' ,'t'}, '<c-\\>', function() require("toggleterm-setup").toggle_terminal() end)

@@ -96,3 +96,6 @@ oil.setup({
     },
   },
 })
+
+-- Keymaps
+vim.keymap.set('n', '<C-f>', function() oil.toggle_float() end, { desc = "Toggle oil float" })

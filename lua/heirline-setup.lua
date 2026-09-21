@@ -1,27 +1,49 @@
 local status_ok, heirline = pcall(require, "heirline")
+if not status_ok then
+  vim.notify("heirline-setup: heirline.nvim is not available", vim.log.levels.WARN)
+  return
+end
 
 local conditions = require("heirline.conditions")
 local utils = require("heirline.utils")
-local colors = {
-  bright_bg = utils.get_highlight("Folded").bg,
-  bright_fg = utils.get_highlight("Folded").fg,
-  red = utils.get_highlight("DiagnosticError").fg,
-  dark_red = utils.get_highlight("DiffDelete").bg,
-  green = utils.get_highlight("String").fg,
-  blue = utils.get_highlight("Function").fg,
-  gray = utils.get_highlight("NonText").fg,
-  orange = utils.get_highlight("Constant").fg,
-  purple = utils.get_highlight("Statement").fg,
-  cyan = utils.get_highlight("Special").fg,
-  diag_warn = utils.get_highlight("DiagnosticWarn").fg,
-  diag_error = utils.get_highlight("DiagnosticError").fg,
-  diag_hint = utils.get_highlight("DiagnosticHint").fg,
-  diag_info = utils.get_highlight("DiagnosticInfo").fg,
-  git_del = utils.get_highlight("diffDeleted").fg,
-  git_add = utils.get_highlight("diffAdded").fg,
-  git_change = utils.get_highlight("diffChanged").fg,
-}
-require("heirline").load_colors(colors)
+
+-- get_highlight() returns an empty table for groups the active colorscheme does
+-- not define (nightfox has no `diffDeleted`, for instance). That leaves the
+-- color name undefined, and heirline then hands the *name* straight to
+-- nvim_set_hl at render time -- "Invalid highlight color: 'git_del'" -- which
+-- kills the entire statusline. So try a list of groups and always end on a
+-- literal fallback.
+local function hl_attr(attr, groups, fallback)
+  for _, group in ipairs(groups) do
+    local value = utils.get_highlight(group)[attr]
+    if value then
+      return value
+    end
+  end
+  return fallback
+end
+
+local function setup_colors()
+  return {
+    bright_bg = hl_attr("bg", { "Folded" }, "#3b4048"),
+    bright_fg = hl_attr("fg", { "Folded" }, "#a0a8b7"),
+    red = hl_attr("fg", { "DiagnosticError" }, "#e06c75"),
+    dark_red = hl_attr("bg", { "DiffDelete" }, "#3f2d3d"),
+    green = hl_attr("fg", { "String" }, "#98c379"),
+    blue = hl_attr("fg", { "Function" }, "#61afef"),
+    gray = hl_attr("fg", { "NonText" }, "#5c6370"),
+    orange = hl_attr("fg", { "Constant" }, "#d19a66"),
+    purple = hl_attr("fg", { "Statement" }, "#c678dd"),
+    cyan = hl_attr("fg", { "Special" }, "#56b6c2"),
+    diag_warn = hl_attr("fg", { "DiagnosticWarn" }, "#e5c07b"),
+    diag_error = hl_attr("fg", { "DiagnosticError" }, "#e06c75"),
+    diag_hint = hl_attr("fg", { "DiagnosticHint" }, "#56b6c2"),
+    diag_info = hl_attr("fg", { "DiagnosticInfo" }, "#61afef"),
+    git_del = hl_attr("fg", { "diffDeleted", "Removed", "GitSignsDelete" }, "#e06c75"),
+    git_add = hl_attr("fg", { "diffAdded", "Added", "GitSignsAdd" }, "#98c379"),
+    git_change = hl_attr("fg", { "diffChanged", "Changed", "GitSignsChange" }, "#d19a66"),
+  }
+end
 -- local colors = require'kanagawa.colors'.setup()
 
 local ViMode = {
@@ -123,9 +145,13 @@ local FileNameBlock = {
 
 local FileIcon = {
   init = function(self)
+    local ok, devicons = pcall(require, "nvim-web-devicons")
+    if not ok then
+      return
+    end
     local filename = self.filename
     local extension = vim.fn.fnamemodify(filename, ":e")
-    self.icon, self.icon_color = require("nvim-web-devicons").get_icon_color(filename, extension, { default = true })
+    self.icon, self.icon_color = devicons.get_icon_color(filename, extension, { default = true })
   end,
   provider = function(self)
     return self.icon and (self.icon .. " ")
@@ -139,7 +165,9 @@ local FileName = {
   provider = function(self)
     -- first, trim the pattern relative to the current directory. For other
     -- options, see :h filename-modifers
-    local filename = vim.fn.fnamemodify(self.filename, ":.")
+    -- fall back to the buffer name so this component also works on its own,
+    -- outside of FileNameBlock (which is what sets self.filename)
+    local filename = vim.fn.fnamemodify(self.filename or vim.api.nvim_buf_get_name(0), ":.")
     if filename == "" then return "[No Name]" end
     -- now, if the filename would occupy more than 1/4th of the available
     -- space, we trim the file path to its initials
@@ -197,35 +225,16 @@ local FileEncoding = {
   provider = function()
     local enc = (vim.bo.fenc ~= '' and vim.bo.fenc) or vim.o.enc -- :h 'enc'
     return enc ~= 'utf-8' and enc:upper()
-  end
+  end,
+  hl = { fg = utils.get_highlight("Type").fg, bold = true },
 }
 
 local FileFormat = {
   provider = function()
     local fmt = vim.bo.fileformat
     return fmt ~= 'unix' and fmt:upper()
-  end
-}
-
-local FileSize = {
-  provider = function()
-    -- stackoverflow, compute human readable file size
-    local suffix = { 'b', 'k', 'M', 'G', 'T', 'P', 'E' }
-    local fsize = vim.fn.getfsize(vim.api.nvim_buf_get_name(0))
-    fsize = (fsize < 0 and 0) or fsize
-    if fsize < 1024 then
-      return fsize..suffix[1]
-    end
-    local i = math.floor((math.log(fsize) / math.log(1024)))
-    return string.format("%.2g%s", fsize / math.pow(1024, i), suffix[i + 1])
-  end
-}
-local FileLastModified = {
-  -- did you know? Vim is full of functions!
-  provider = function()
-    local ftime = vim.fn.getftime(vim.api.nvim_buf_get_name(0))
-    return (ftime > 0) and os.date("%c", ftime)
-  end
+  end,
+  hl = { fg = utils.get_highlight("Type").fg, bold = true },
 }
 
 -- We're getting minimalist here!
@@ -237,21 +246,6 @@ local Ruler = {
   provider = "%7(%l/%3L%):%2c %P",
 }
 
--- I take no credits for this! 🦁
-local ScrollBar ={
-  static = {
-    sbar = { '▁', '▂', '▃', '▄', '▅', '▆', '▇', '█' }
-    -- Another variant, because the more choice the better.
-    -- sbar = { '🭶', '🭷', '🭸', '🭹', '🭺', '🭻' }
-  },
-  provider = function(self)
-    local curr_line = vim.api.nvim_win_get_cursor(0)[1]
-    local lines = vim.api.nvim_buf_line_count(0)
-    local i = math.floor((curr_line - 1) / lines * #self.sbar) + 1
-    return string.rep(self.sbar[i], 2)
-  end,
-  hl = { fg = "blue", bg = "bright_bg" },
-}
 local LSPActive = {
   condition = conditions.lsp_attached,
   update = {'LspAttach', 'LspDetach'},
@@ -284,7 +278,10 @@ local LSPActive = {
 -- Full nerd (with icon colors and clickable elements)!
 -- works in multi window, but does not support flexible components (yet ...)
 local Navic = {
-  condition = function() return require("nvim-navic").is_available() end,
+  condition = function()
+    local ok, navic = pcall(require, "nvim-navic")
+    return ok and navic.is_available()
+  end,
   static = {
     -- create a type highlight map
     type_hl = {
@@ -317,13 +314,15 @@ local Navic = {
     },
     -- bit operation dark magic, see below...
     enc = function(line, col, winnr)
-      return bit.bor(bit.lshift(line, 16), bit.lshift(col, 6), winnr)
+      local b = require("bit")
+      return b.bor(b.lshift(line, 16), b.lshift(col, 6), winnr)
     end,
     -- line: 16 bit (65535); col: 10 bit (1023); winnr: 6 bit (63)
     dec = function(c)
-      local line = bit.rshift(c, 16)
-      local col = bit.band(bit.rshift(c, 6), 1023)
-      local winnr = bit.band(c, 63)
+      local b = require("bit")
+      local line = b.rshift(c, 16)
+      local col = b.band(b.rshift(c, 6), 1023)
+      local winnr = b.band(c, 63)
       return line, col, winnr
     end
   },
@@ -377,123 +376,74 @@ local Navic = {
   update = 'CursorMoved'
 }
 
--- local Diagnostics = {
---
---   condition = conditions.has_diagnostics,
---
---   static = {
---     error_icon = vim.fn.sign_getdefined("DiagnosticSignError")[1].text,
---     warn_icon = vim.fn.sign_getdefined("DiagnosticSignWarn")[1].text,
---     info_icon = vim.fn.sign_getdefined("DiagnosticSignInfo")[1].text,
---     hint_icon = vim.fn.sign_getdefined("DiagnosticSignHint")[1].text,
---   },
---
---   init = function(self)
---     self.errors = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
---     self.warnings = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN })
---     self.hints = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.HINT })
---     self.info = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.INFO })
---   end,
---
---   update = { "DiagnosticChanged", "BufEnter" },
---
---   {
---     provider = "![",
---   },
---   {
---     provider = function(self)
---       -- 0 is just another output, we can decide to print it or not!
---       return self.errors > 0 and (self.error_icon .. self.errors .. " ")
---     end,
---     hl = { fg = "diag_error" },
---   },
---   {
---     provider = function(self)
---       return self.warnings > 0 and (self.warn_icon .. self.warnings .. " ")
---     end,
---     hl = { fg = "diag_warn" },
---   },
---   {
---     provider = function(self)
---       return self.info > 0 and (self.info_icon .. self.info .. " ")
---     end,
---     hl = { fg = "diag_info" },
---   },
---   {
---     provider = function(self)
---       return self.hints > 0 and (self.hint_icon .. self.hints)
---     end,
---     hl = { fg = "diag_hint" },
---   },
---   {
---     provider = "]",
---   },
--- }
+local git_stats = { added = 0, removed = 0 }
+local git_stats_running = false
 
-local Git = {
-  condition = conditions.is_git_repo,
-
-  init = function(self)
-    self.status_dict = vim.b.gitsigns_status_dict
-    self.has_changes = self.status_dict.added ~= 0 or self.status_dict.removed ~= 0 or self.status_dict.changed ~= 0
-  end,
-
-  hl = { fg = "orange" },
-
-  {   -- git branch name
-    provider = function(self)
-      return " " .. self.status_dict.head
-    end,
-    hl = { bold = true }
-  },
-  -- You could handle delimiters, icons and counts similar to Diagnostics
-  {
-    condition = function(self)
-      return self.has_changes
-    end,
-    provider = "("
-  },
-  {
-    provider = function(self)
-      local count = self.status_dict.added or 0
-      return count > 0 and ("+" .. count)
-    end,
-    hl = { fg = "git_add" },
-  },
-  {
-    provider = function(self)
-      local count = self.status_dict.removed or 0
-      return count > 0 and ("-" .. count)
-    end,
-    hl = { fg = "git_del" },
-  },
-  {
-    provider = function(self)
-      local count = self.status_dict.changed or 0
-      return count > 0 and ("~" .. count)
-    end,
-    hl = { fg = "git_change" },
-  },
-  {
-    condition = function(self)
-      return self.has_changes
-    end,
-    provider = ")",
-  },
-}
-
-local WorkDir = {
-  provider = function()
-    local icon = (vim.fn.haslocaldir(0) == 1 and "l" or "g") .. " " .. " "
-    local cwd = vim.fn.getcwd(0)
-    cwd = vim.fn.fnamemodify(cwd, ":~")
-    if not conditions.width_percent_below(#cwd, 0.25) then
-      cwd = vim.fn.pathshorten(cwd)
+local function refresh_git_stats()
+  if git_stats_running then
+    return
+  end
+  git_stats_running = true
+  vim.system(
+    -- --no-optional-locks: a statusline poll must never write .git/index.lock
+    { "git", "--no-optional-locks", "diff", "--numstat" },
+    { cwd = vim.fn.getcwd(), text = true },
+    function(out)
+      git_stats_running = false
+      local added, removed = 0, 0
+      if out.code == 0 then
+        -- binary files are reported as "-\t-\t<path>" and simply do not match
+        for a, r in (out.stdout or ""):gmatch("(%d+)\t(%d+)\t") do
+          added = added + tonumber(a)
+          removed = removed + tonumber(r)
+        end
+      end
+      if added ~= git_stats.added or removed ~= git_stats.removed then
+        git_stats = { added = added, removed = removed }
+        vim.schedule(function()
+          vim.cmd.redrawstatus()
+        end)
+      end
     end
-    local trail = cwd:sub(-1) == '/' and '' or "/"
-    return icon .. cwd  .. trail
+  )
+end
+
+local GitHead = {
+  condition = function()
+    return (vim.g.gitsigns_head or "") ~= ""
   end,
-  hl = { fg = "blue", bold = true },
+  hl = { fg = "orange" },
+  {
+    provider = function()
+      return " " .. vim.g.gitsigns_head
+    end,
+    hl = { bold = true },
+  },
+  {
+    condition = function()
+      return git_stats.added > 0 or git_stats.removed > 0
+    end,
+    { provider = "(" },
+    {
+      condition = function()
+        return git_stats.added > 0
+      end,
+      provider = function()
+        return "+" .. git_stats.added
+      end,
+      hl = { fg = "git_add" },
+    },
+    {
+      condition = function()
+        return git_stats.removed > 0
+      end,
+      provider = function()
+        return "-" .. git_stats.removed
+      end,
+      hl = { fg = "git_del" },
+    },
+    { provider = ")" },
+  },
 }
 
 local TerminalName = {
@@ -514,70 +464,24 @@ local HelpFileName = {
     local filename = vim.api.nvim_buf_get_name(0)
     return vim.fn.fnamemodify(filename, ":t")
   end,
-  hl = { fg = colors.blue },
-}
-
-local Spell = {
-  condition = function()
-    return vim.wo.spell
-  end,
-  provider = 'SPELL ',
-  hl = { bold = true, fg = "orange"}
-}
-
-local SearchCount = {
-  condition = function()
-    return vim.v.hlsearch ~= 0 and vim.o.cmdheight == 0
-  end,
-  init = function(self)
-    local ok, search = pcall(vim.fn.searchcount)
-    if ok and search.total then
-      self.search = search
-    end
-  end,
-  provider = function(self)
-    local search = self.search
-    return string.format("[%d/%d]", search.current, math.min(search.total, search.maxcount))
-  end,
-}
-
-local MacroRec = {
-  condition = function()
-    return vim.fn.reg_recording() ~= "" and vim.o.cmdheight == 0
-  end,
-  provider = " ",
-  hl = { fg = "orange", bold = true },
-  utils.surround({ "[", "]" }, nil, {
-    provider = function()
-      return vim.fn.reg_recording()
-    end,
-    hl = { fg = "green", bold = true },
-  }),
-  update = {
-    "RecordingEnter",
-    "RecordingLeave",
-  }
+  hl = { fg = "blue" },
 }
 
 vim.opt.showcmdloc = 'statusline'
-local ShowCmd = {
-  condition = function()
-    return vim.o.cmdheight == 0
-  end,
-  provider = ":%3.5(%S%)",
-}
 local Align = { provider = "%=" }
 local Space = { provider = " " }
 
 ViMode = utils.surround({ "", "" }, "bright_bg", { ViMode })
 
 local DefaultStatusline = {
-  ViMode, Space, FileNameBlock, Space, Git, Space, Align,
-  Navic, Align, LSPActive, Space, Space, Space, FileType, Space, Ruler, Space, ScrollBar
+  ViMode, Space, FileNameBlock, Space, GitHead, Space, Align,
+  Navic, Align, LSPActive, Space, Space, Space, FileType, Space,
+  FileEncoding, Space, FileFormat, Space, Ruler, Space
 }
 local InactiveStatusline = {
   condition = conditions.is_not_active,
-  FileType, Space, FileName, Align,
+  -- FileNameBlock, not FileName: self.filename is set by FileNameBlock's init()
+  FileType, Space, FileNameBlock, Align,
 }
 local SpecialStatusline = {
   condition = function()
@@ -592,13 +496,13 @@ local SpecialStatusline = {
 local TerminalStatusline = {
 
   condition = function()
-    return conditions.buffer_matches({ buftype = { "terminal" } })
+    return conditions.buffer_matches({ buftype = { "terminal", } })
   end,
 
   hl = { bg = "dark_red" },
 
   -- Quickly add a condition to the ViMode to only show it when buffer is active!
-  { condition = conditions.is_active, ViMode, Space }, FileType, Space, TerminalName, Align,
+  { condition = conditions.is_active, ViMode, Space }, FileType, Space, TerminalName, Space, GitHead, Space, Align,
 }
 
 local StatusLines = {
@@ -620,32 +524,10 @@ local StatusLines = {
 
 heirline.setup({
   statusline = StatusLines,
+  opts = {
+    colors = setup_colors,
+  },
 })
-
-local function setup_colors()
-    return {
-        bright_bg = utils.get_highlight("Folded").bg,
-        bright_fg = utils.get_highlight("Folded").fg,
-        red = utils.get_highlight("DiagnosticError").fg,
-        dark_red = utils.get_highlight("DiffDelete").bg,
-        green = utils.get_highlight("String").fg,
-        blue = utils.get_highlight("Function").fg,
-        gray = utils.get_highlight("NonText").fg,
-        orange = utils.get_highlight("Constant").fg,
-        purple = utils.get_highlight("Statement").fg,
-        cyan = utils.get_highlight("Special").fg,
-        diag_warn = utils.get_highlight("DiagnosticWarn").fg,
-        diag_error = utils.get_highlight("DiagnosticError").fg,
-        diag_hint = utils.get_highlight("DiagnosticHint").fg,
-        diag_info = utils.get_highlight("DiagnosticInfo").fg,
-        git_del = utils.get_highlight("diffDeleted").fg,
-        git_add = utils.get_highlight("diffAdded").fg,
-        git_change = utils.get_highlight("diffChanged").fg,
-    }
-end
-
--- require("heirline").load_colors(setup_colors)
--- or pass it to config.opts.colors
 
 vim.api.nvim_create_augroup("Heirline", { clear = true })
 vim.api.nvim_create_autocmd("ColorScheme", {
@@ -654,3 +536,17 @@ vim.api.nvim_create_autocmd("ColorScheme", {
     end,
     group = "Heirline",
 })
+
+-- Keep GitHead's worktree counts fresh. GitSignsUpdate covers edits to files
+-- gitsigns is attached to; the rest catch changes made outside this nvim (a
+-- commit or checkout in the terminal buffer itself, most obviously).
+vim.api.nvim_create_autocmd({ "BufWritePost", "DirChanged", "FocusGained", "TermLeave" }, {
+    callback = refresh_git_stats,
+    group = "Heirline",
+})
+vim.api.nvim_create_autocmd("User", {
+    pattern = "GitSignsUpdate",
+    callback = refresh_git_stats,
+    group = "Heirline",
+})
+refresh_git_stats()
